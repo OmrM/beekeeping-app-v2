@@ -13,7 +13,11 @@ import { ThemeContext } from 'styled-components/native';
 //const Tab = createBottomTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-const BottomTabNavigator = ({toggleTheme}) => {
+interface Props {
+    toggleTheme: () => void;
+}
+
+const BottomTabNavigator = ({ toggleTheme }: Props) => {
 
     const theme = useContext(ThemeContext);
     console.log(theme);
@@ -29,7 +33,7 @@ const BottomTabNavigator = ({toggleTheme}) => {
         >
 
             <Tab.Screen name="HomeStack"
-                component={HomeStackNavigator}
+                children={(props) => <HomeStackNavigator {...props} toggleTheme={toggleTheme} />}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color }) => (
@@ -38,7 +42,7 @@ const BottomTabNavigator = ({toggleTheme}) => {
                 }}
             />
             <Tab.Screen name="ApiariesStack"
-                component={ApiariesStackNavigator}
+                children={(props) => <ApiariesStackNavigator {...props} toggleTheme={toggleTheme} />}
                 options={{
                     tabBarLabel: 'Apiaries',
                     tabBarIcon: ({ color }) => (
@@ -47,7 +51,7 @@ const BottomTabNavigator = ({toggleTheme}) => {
                 }}
             />
             <Tab.Screen name="HivesStack"
-                component={HivesStackNavigator}
+                children={(props) => <HivesStackNavigator {...props} toggleTheme={toggleTheme} />}
                 options={{
                     tabBarLabel: 'Hives',
                     tabBarIcon: ({ color }) => (
@@ -56,7 +60,9 @@ const BottomTabNavigator = ({toggleTheme}) => {
                 }}
             />
             <Tab.Screen name="AlertsStack"
-                component={AlertsStackNavigator}
+                /* if you try passing this inline function using the 'component' prop it tells
+                    you to use the children prop instead. */
+                children={(props) => <AlertsStackNavigator {...props} toggleTheme={toggleTheme} />}
                 options={{
                     tabBarLabel: 'Alerts',
                     tabBarIcon: ({ color }) => (
@@ -66,7 +72,18 @@ const BottomTabNavigator = ({toggleTheme}) => {
             />
 
             <Tab.Screen name="SettingsStack"
-                children={ (props) => <SettingsStackNavigator {...props} toggleTheme={toggleTheme}/>}
+                /* children prop: allows defining content for Tab.Screen component
+                    instead of component, you can pass a function as the children prop
+                    which receives the props object and returns content to be rendered */
+                /* this inline function:
+                    (props) =>... takes in props as a a param. 
+                        this props obj contains properties passed to the Tab.Screen component
+                    <SettingsStackNavigator {...props} toggleTheme..: 
+                        inside the func, it renders the SettingsStack.. component
+                    {...props} spread operator: passes all properties received by Tab.Screen to SettingStackNavigator component
+                        it also adds a new prop 'toggleTheme' with the val of the toggleTheme function
+                */
+                children={(props) => <SettingsStackNavigator {...props} toggleTheme={toggleTheme} />}
                 options={{
                     tabBarLabel: 'Settings',
                     tabBarIcon: ({ color }) => (
