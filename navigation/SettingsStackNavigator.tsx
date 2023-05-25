@@ -8,7 +8,7 @@ const SettingsStackNavigator = ({toggleTheme}) => {
     return(
         <Stack.Navigator>
             <Stack.Screen name="Settings">
-                {props => <SettingsScreen {...props} toggleTheme={toggleTheme} />}
+                { props => <SettingsScreen {...props} toggleTheme={toggleTheme}/> }
             </Stack.Screen>
         </Stack.Navigator>
     );

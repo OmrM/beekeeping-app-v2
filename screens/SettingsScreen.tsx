@@ -3,6 +3,7 @@ import React, { useContext, useState} from 'react';
 import { ThemeContext } from 'styled-components';
 import { Text, Switch, View} from 'react-native';
 import { darkTheme } from '../themes/themes';
+import { Container, StyledText } from './styles/SettingsScreen.styles.ts';
 
 const SettingsScreen = ({toggleTheme}) => {
   const theme = useContext(ThemeContext);
@@ -17,10 +18,10 @@ const SettingsScreen = ({toggleTheme}) => {
   }
 
   return (
-    <View style={{ backgroundColor: theme.background, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ color: theme.text }}>Dark Mode</Text>
+    <Container>
+      <StyledText>Dark Mode</StyledText>
       <Switch value={isDarkMode} onValueChange={handleToggle} />
-    </View>
+    </Container>
   );
 };
 
