@@ -1,28 +1,31 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useContext } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
-import SettingsScreen from '../screens/SettingScreen';
 import HomeStackNavigator from './HomeStackNavigator';
 import SettingsStackNavigator from './SettingsStackNavigator';
 import ApiariesStackNavigator from './ApiariesStackNavigator';
 import HivesStackNavigator from './HivesStackNavigator';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AlertsScreen from '../screens/AlertsScreen';
+
 import AlertsStackNavigator from './AlertsStackNavigator';
+
+import { ThemeContext } from 'styled-components/native';
+
 //const Tab = createBottomTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = ({toggleTheme}) => {
+
+    const theme = useContext(ThemeContext);
+    console.log(theme);
 
     return (
         <Tab.Navigator
             initialRouteName="HomeStack"
-            activeColor='#3E2723'
-            inactiveColor='#795548'
-            barStyle={{
-                backgroundColor: '#FFC107',
-                height: 90
-            }}
+            activeColor={theme.activeColor}
+            inactiveColor={theme.inactiveColor}
+            barStyle={
+                theme.barStyle
+            }
         >
 
             <Tab.Screen name="HomeStack"
@@ -63,11 +66,11 @@ const BottomTabNavigator = () => {
             />
 
             <Tab.Screen name="SettingsStack"
-                component={SettingsStackNavigator}
+                children={ (props) => <SettingsStackNavigator {...props} toggleTheme={toggleTheme}/>}
                 options={{
-                    tabBarLabel: 'Settings',
+                    tabBarLabel: 'Alerts',
                     tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="cog" color={color} size={24} />
+                        <MaterialCommunityIcons name="bell" color={color} size={24} />
                     ),
                 }}
             />

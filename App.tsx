@@ -1,16 +1,40 @@
 import 'react-native-gesture-handler';
+import React from 'react';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import DrawerNavigator from './navigation/DrawerNavigator';
+
+
+
+//theming dependencies:
+import { ThemeProvider } from 'styled-components/native';
+
+import { lightTheme, darkTheme } from './themes/themes';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 
+
 const App = () => {
+  
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    // The function we pass to 'setTheme' receives the current theme state.
+    // If current theme is 'light', it will return 'dark'
+    // If current theme is not 'light', it will return 'light'
+    setTheme((theme) => theme === 'light' ? 'dark' : 'light');
+  };
+  const selectedTheme = theme === 'light' ? lightTheme : darkTheme;
+
+
   return (
-    <NavigationContainer>
-      {/* import top level navigator here */}
-      <BottomTabNavigator/>
-    </NavigationContainer>
+    <ThemeProvider theme={selectedTheme} >
+      <StatusBar style='auto'/>
+      <NavigationContainer>
+        {/* import top level navigator here */}
+        <BottomTabNavigator toggleTheme={toggleTheme} />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 
@@ -24,9 +48,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-
-{/* <View style={styles.container}>
-<Text>Open up App.tsx to start working on your app!</Text>
-<StatusBar style="auto" />
-</View> */}
