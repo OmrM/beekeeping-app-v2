@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 //import screens or other navigators
 import HomeScreen from '../screens/HomeScreen';
 import BottomTabNavigator from './BottomTabNavigator';
-import SettingsScreen from '../screens/SettingScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import SettingsStackNavigator from './SettingsStackNavigator';
 const Drawer = createDrawerNavigator();
 
