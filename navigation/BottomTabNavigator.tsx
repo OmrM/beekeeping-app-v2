@@ -68,9 +68,9 @@ const BottomTabNavigator = ({toggleTheme}) => {
             <Tab.Screen name="SettingsStack"
                 children={ (props) => <SettingsStackNavigator {...props} toggleTheme={toggleTheme}/>}
                 options={{
-                    tabBarLabel: 'Alerts',
+                    tabBarLabel: 'Settings',
                     tabBarIcon: ({ color }) => (
-                        <MaterialCommunityIcons name="bell" color={color} size={24} />
+                        <MaterialCommunityIcons name="cog" color={color} size={24} />
                     ),
                 }}
             />
