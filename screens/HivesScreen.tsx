@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Container, StyledText } from './styles/SettingsScreen.styles';
 
-const HivesScreen = () => {
+interface Props {
+  toggleTheme: () => void;
+}
+
+const HivesScreen = ({ toggleTheme }: Props) => {
   return (
-    <View>
-      <Text>Hives Screen</Text>
-    </View>
+    <Container>
+      <StyledText>Hives Screen</StyledText>
+    </Container>
   );
 };
 

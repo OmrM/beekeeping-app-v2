@@ -2,12 +2,17 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
+import { Container, StyledText } from './styles/SettingsScreen.styles'
 
-const HomeScreen = () => {
+interface Props {
+  toggleTheme: () => void;
+}
+//const HomeScreen: React.FC<Props> = ({toggleTheme}) => {}
+const HomeScreen = ({ toggleTheme }: Props) => {
   return (
-    <View>
-      <Text>Home Screen</Text>
-    </View>
+    <Container>
+      <StyledText>Home Screen</StyledText>
+    </Container>
   );
 };
 

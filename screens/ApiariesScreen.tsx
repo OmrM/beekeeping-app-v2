@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { Container, StyledText } from './styles/SettingsScreen.styles';
 
-const ApiariesScreen = () => {
+interface Props {
+  toggleTheme: () => void;
+}
+
+const ApiariesScreen = ({ toggleTheme }: Props) => {
   return (
-    <View>
-      <Text>Apiaries Screen</Text>
-    </View>
+    <Container>
+      <StyledText>Apiaries Screen</StyledText>
+    </Container>
   );
 };
 
