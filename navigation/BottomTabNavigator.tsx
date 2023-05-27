@@ -9,6 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AlertsStackNavigator from './AlertsStackNavigator';
 
 import { ThemeContext } from 'styled-components/native';
+import { lightTheme } from '../themes/themes'; 
 
 //const Tab = createBottomTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -19,7 +20,8 @@ interface Props {
 
 const BottomTabNavigator = ({ toggleTheme }: Props) => {
 
-    const theme = useContext(ThemeContext);
+    //const theme = useContext(ThemeContext);
+    const theme = useContext(ThemeContext) || lightTheme;
     console.log(theme);
 
     return (
@@ -75,7 +77,7 @@ const BottomTabNavigator = ({ toggleTheme }: Props) => {
                 /* children prop: allows defining content for Tab.Screen component
                     instead of component, you can pass a function as the children prop
                     which receives the props object and returns content to be rendered */
-                /* this inline function:
+                /* Inside this inline function:
                     (props) =>... takes in props as a a param. 
                         this props obj contains properties passed to the Tab.Screen component
                     <SettingsStackNavigator {...props} toggleTheme..: 

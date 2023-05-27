@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, StyledText } from './styles/settingsScreen.styles';
+import { Container, StyledText } from './styles/SettingsScreen.styles';
 
 interface Props {
   toggleTheme: () => void;

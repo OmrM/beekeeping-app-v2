@@ -1,5 +1,9 @@
-// themes.ts
-export const lightTheme = {
+/* themes.ts: defines specific values for light/dark themes  
+*/
+
+import { DefaultTheme } from 'styled-components/native';
+
+export const lightTheme: DefaultTheme = {
     background: '#fff',
     text: '#000',
     activeColor: '#3E2723',
@@ -11,7 +15,7 @@ export const lightTheme = {
     // ...other styles
   }
   
-  export const darkTheme = {
+  export const darkTheme: DefaultTheme = {
     background: '#333',
     text: '#fff',
     activeColor: '#fff',
