@@ -16,6 +16,8 @@ export const lightTheme: DefaultTheme = {
       backgroundColor: '#FFC107', //yellow #f6d365
       height: 95
     },
+/*     activeColor: '#3c2415',
+    inactiveColor: '#3c2415', */
     activeColor: '#3c2415',
     inactiveColor: '#795548',
 
