@@ -1,6 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HivesScreen from "../screens/HivesScreen";
-import { HeaderBackButtonProps } from "@react-navigation/native-stack/lib/typescript/src/types";
+import { useContext } from "react";
+import { ThemeContext } from "styled-components";
+import { lightTheme } from "../themes/themes";
+
 const Stack = createNativeStackNavigator();
 
 interface Props {
@@ -8,8 +11,16 @@ interface Props {
 }
 
 const HivesStackNavigator = ({ toggleTheme }: Props) => {
+    const theme = useContext(ThemeContext) || lightTheme;
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: theme.headerStyle.backgroundColor,
+                },
+                headerTintColor: theme.headerStyle.textColor,
+            }}
+        >
             <Stack.Screen name="Hives">
                 {props => < HivesScreen {...props} toggleTheme={toggleTheme} />}
             </Stack.Screen>

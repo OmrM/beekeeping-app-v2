@@ -22,13 +22,13 @@ const BottomTabNavigator = ({ toggleTheme }: Props) => {
 
     //const theme = useContext(ThemeContext);
     const theme = useContext(ThemeContext) || lightTheme;
-    console.log(theme);
 
     return (
         <Tab.Navigator
             initialRouteName="HomeStack"
             activeColor={theme.activeColor}
             inactiveColor={theme.inactiveColor}
+            shifting={true}
             barStyle={
                 theme.barStyle
             }

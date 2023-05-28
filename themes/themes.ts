@@ -4,25 +4,37 @@
 import { DefaultTheme } from 'styled-components/native';
 
 export const lightTheme: DefaultTheme = {
-    background: '#fff',
-    text: '#000',
-    activeColor: '#3E2723',
-    inactiveColor: '#795548',
+    background: '#ffffff',
+    text: '#3c2415',
+    // Stack Navigaton Bar (Top Bar):
+    headerStyle: {
+      backgroundColor: '#FFC107', 
+      textColor: '#3c2415', 
+    },
+    // Bottom Tabs
     barStyle: {
-      backgroundColor: '#FFC107',
+      backgroundColor: '#FFC107', //yellow #f6d365
       height: 95
     },
-    // ...other styles
+    activeColor: '#3c2415',
+    inactiveColor: '#795548',
+
   }
   
   export const darkTheme: DefaultTheme = {
-    background: '#333',
-    text: '#fff',
-    activeColor: '#fff',
-    inactiveColor: '#888',
+    background: '#161B22', //old one is #333
+    text: '#fff', //#f6d365
+    // Stack Navigaton Bar (Top Bar):
+    headerStyle: {
+      backgroundColor:'#0D1117', 
+      textColor: '#f8f9fa',
+    },
+    // Bottom Tabs
     barStyle: {
-      backgroundColor: '#000',
+      backgroundColor: '#0D1117',
       height: 95
     },
-    // ...other styles
+    activeColor: '#FFAB00',
+    inactiveColor: '#645631', // #888
+
   }

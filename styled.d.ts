@@ -28,6 +28,10 @@ declare module 'styled-components/native' {
         text: string;
         activeColor: string;
         inactiveColor: string;
+        headerStyle: {
+            backgroundColor: string; 
+            textColor: string;
+          }
         barStyle: { 
             backgroundColor: string;
             height: integer;
