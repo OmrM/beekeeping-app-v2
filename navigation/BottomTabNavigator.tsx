@@ -28,7 +28,7 @@ const BottomTabNavigator = ({ toggleTheme }: Props) => {
             initialRouteName="HomeStack"
             activeColor={theme.activeColor}
             inactiveColor={theme.inactiveColor}
-            shifting={true}
+            shifting={false}
             barStyle={
                 theme.barStyle
             }
