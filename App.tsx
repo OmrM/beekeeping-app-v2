@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -31,7 +31,8 @@ const App = () => {
   return (
     // Wrap the entire app with the ThemeProvider component and pass the selected theme as a prop
     <ThemeProvider theme={selectedTheme} >
-      <StatusBar style='auto'/>
+     {/*  <StatusBar style='auto'/> */}
+     <StatusBar barStyle={theme === 'light' ? 'dark-content' : 'light-content'} />
       <NavigationContainer>
         {/* import top level navigator here */}
         <BottomTabNavigator toggleTheme={toggleTheme} />
