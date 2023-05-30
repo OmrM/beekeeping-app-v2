@@ -49,5 +49,9 @@ declare module 'styled-components/native' {
             fontSize: string;
             fontWeight: string;
         }
+        button: {
+            backgroundColor: string;
+            textColor: string;
+        }
     };
 };

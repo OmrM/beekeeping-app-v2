@@ -11,7 +11,7 @@ export const lightTheme: DefaultTheme = {
   },
   // Bottom Tabs
   barStyle: {
-    backgroundColor: '#FFC107', //yellow #f6d365
+    backgroundColor: '', //yellow #f6d365
     height: 95
   },
   /*     activeColor: '#3c2415',
@@ -21,8 +21,7 @@ export const lightTheme: DefaultTheme = {
 
 
   background: '#ffffff',
-  textColor: '#3c2415',
-
+  textColor: '#3c2415', //#FFC107
   cardStyle: {
     backgroundColor: '#f8f9fa',
   },
@@ -34,8 +33,15 @@ export const lightTheme: DefaultTheme = {
   cardText: {
     fontSize: '16px',
     fontWeight: 'normal',
-  }
+  },
+  button:{
+    backgroundColor: '#FFC107',
+    textColor: '#ffffff'
+  },
 }
+
+
+
 
 export const darkTheme: DefaultTheme = {
   // Stack Navigaton Bar (Top Bar):
@@ -65,5 +71,9 @@ export const darkTheme: DefaultTheme = {
   cardText: {
     fontSize: '16px',
     fontWeight: 'normal',
-  }
+  },
+  button:{
+    backgroundColor: '#FFC107',
+    textColor: '#ffffff'
+  },
 }

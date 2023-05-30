@@ -11,7 +11,7 @@ export const ButtonWrapper = styled.View`
 export const CircleButton = styled.Pressable`
     width: 60px;
     height: 60px;
-    background-color: ${ ({theme}) => theme.activeColor};
+    background-color: ${ ({theme}) => theme.button.backgroundColor};
     justify-content: center;
     align-items: center;
     border-radius: 30px;
