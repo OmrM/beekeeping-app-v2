@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
+import { FlatList, } from 'react-native';
 import { StyledText, Container, CardContainer, CardText, CardTitle } from './styles/Screens.styles';
 import ActionButton from '../components/ActionButton';
 

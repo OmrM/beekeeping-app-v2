@@ -17,7 +17,7 @@ export const StyledText = styled.Text`
     color: ${({ theme }) => theme.textColor};
 `;
 
-export const CardContainer = styled.View`
+export const CardContainer = styled.Pressable`
     margin-bottom: 20px;
     padding: 20px;
     border-radius: 8px;
