@@ -6,21 +6,21 @@ import { DefaultTheme } from 'styled-components/native';
 export const lightTheme: DefaultTheme = {
   // Stack Navigaton Bar (Top Bar):
   headerStyle: {
-    backgroundColor: '#FFC107',
+    backgroundColor: '#ffff',
     textColor: '#3c2415',
   },
   // Bottom Tabs
   barStyle: {
-    backgroundColor: '', //yellow #f6d365
+    backgroundColor: '#fafafa', //yellow #f6d365
     height: 95
   },
   /*     activeColor: '#3c2415',
       inactiveColor: '#3c2415', */
-  activeColor: '#3c2415',
-  inactiveColor: '#795548',
+  activeColor: '#FF851B',
+  inactiveColor: '#645631',
 
 
-  background: '#ffffff',
+  background: '#F2EEDF',
   textColor: '#3c2415', //#FFC107
   cardStyle: {
     backgroundColor: '#f8f9fa',
@@ -35,7 +35,7 @@ export const lightTheme: DefaultTheme = {
     fontWeight: 'normal',
   },
   button:{
-    backgroundColor: '#FFC107',
+    backgroundColor: '#FF851B',
     textColor: '#ffffff'
   },
 }
@@ -54,15 +54,15 @@ export const darkTheme: DefaultTheme = {
     backgroundColor: '#0D1117',
     height: 95
   },
-  activeColor: '#FFAB00',
-  inactiveColor: '#645631', // #888
+  activeColor: '#ffd247',
+  inactiveColor: '#ABABAB', // #888
 
 
   background: '#161B22', //old one is #333
   textColor: '#fff', //#f6d365
 
   cardStyle: {
-    backgroundColor: '#322c22',
+    backgroundColor: '#353535',
   },
   cardTitle: {
     fontSize: '18px',
@@ -73,7 +73,7 @@ export const darkTheme: DefaultTheme = {
     fontWeight: 'normal',
   },
   button:{
-    backgroundColor: '#FFC107',
-    textColor: '#ffffff'
+    backgroundColor: '#ffd247 ',
+    textColor: '#0D1117'
   },
 }

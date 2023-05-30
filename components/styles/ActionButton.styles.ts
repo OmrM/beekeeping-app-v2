@@ -18,7 +18,6 @@ export const CircleButton = styled.Pressable`
 `;
 
 export const ButtonText = styled.Text`
-    color: ${ ({theme}) => theme.textColor};
-    font-size: 30px;
-    text-align: center;
+    color: ${ ({theme}) => theme.button.textColor};
+    font-size: 24px;
 `;

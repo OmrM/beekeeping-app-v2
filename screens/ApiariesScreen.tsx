@@ -20,7 +20,7 @@ interface Props {
 };
 
 const ApiariesScreen = () => {
-  const apiaryCard = ({ item }: Props ) => (
+  const apiaryCard = ({ item }: Props) => (
     <CardContainer>
       <CardTitle>{item.name}</CardTitle>
       <CardText>Hives: {item.hives}</CardText>
@@ -36,7 +36,7 @@ const ApiariesScreen = () => {
         renderItem={apiaryCard}
         keyExtractor={item => item.id}
       />
-    <ActionButton/>
+      <ActionButton />
     </Container>
   );
 };
