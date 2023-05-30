@@ -3,7 +3,7 @@ import React, { useContext, useState} from 'react';
 import { ThemeContext } from 'styled-components';
 import { Text, Switch, View} from 'react-native';
 import { darkTheme } from '../themes/themes';
-import { Container, StyledText } from './styles/SettingsScreen.styles';
+import { Container, StyledText } from './styles/Screens.styles';
 //Define the Props interface
 interface Props{
   //toggleTheme prop is typed as a function that returns void
