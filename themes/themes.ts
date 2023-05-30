@@ -56,7 +56,7 @@ export const darkTheme: DefaultTheme = {
   textColor: '#fff', //#f6d365
 
   cardStyle: {
-    backgroundColor: '#645631',
+    backgroundColor: '#322c22',
   },
   cardTitle: {
     fontSize: '18px',

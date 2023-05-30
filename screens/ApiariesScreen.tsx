@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
 import { StyledText, Container, CardContainer, CardText, CardTitle } from './styles/Screens.styles';
+import ActionButton from '../components/ActionButton';
 
 // Let's simulate a data from the server
 const apiaries = [
@@ -9,8 +10,17 @@ const apiaries = [
   //... more apiaries
 ];
 
+interface Props {
+  item: {
+    name: string;
+    hives: string;
+    location: string;
+    notes: string;
+  };
+};
+
 const ApiariesScreen = () => {
-  const apiaryCard = ({ item }) => (
+  const apiaryCard = ({ item }: Props ) => (
     <CardContainer>
       <CardTitle>{item.name}</CardTitle>
       <CardText>Hives: {item.hives}</CardText>
@@ -26,9 +36,11 @@ const ApiariesScreen = () => {
         renderItem={apiaryCard}
         keyExtractor={item => item.id}
       />
+    <ActionButton/>
     </Container>
   );
 };
 
 
 export default ApiariesScreen;
+
