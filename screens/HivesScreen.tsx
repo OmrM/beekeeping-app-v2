@@ -3,6 +3,7 @@ import { FlatList, Image, Pressable, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyledText, Container, CardContainer, CardText, CardTitle } from './styles/Screens.styles';
 import ActionButton from '../components/ActionButton';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // Let's simulate data from the server
 const hives = [
@@ -11,7 +12,7 @@ const hives = [
   //... more hives
 ];
 
-interface Props {
+interface HivesScreenProps {
   item: {
     name: string;
     bees: string;
@@ -21,9 +22,9 @@ interface Props {
   };
 };
 
-const HivesScreen = () => {
-  const hiveCard = ({ item }: Props) => (
-    <Pressable onPress={() => navigation.navigate('HiveDetails', { id: item.id })}>
+const HivesScreen = ({navigation}: any) => {
+  const hiveCard = ({ item }: HivesScreenProps) => (
+    <TouchableOpacity onPress={() => navigation.navigate('HiveDetails', {id:item.id})}>
       <CardContainer style={{ flexDirection: 'row', alignItems: 'center' }}>
         {/* Render the image if exists, else render the default icon */}
         {item.imageUrl !== ''
@@ -37,7 +38,7 @@ const HivesScreen = () => {
           <CardText>Notes: {item.notes}</CardText>
         </View>
       </CardContainer>
-    </Pressable>
+    </TouchableOpacity>
   );
 
   return (

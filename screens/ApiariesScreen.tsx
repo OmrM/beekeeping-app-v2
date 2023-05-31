@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, } from 'react-native';
 import { StyledText, Container, CardContainer, CardText, CardTitle } from './styles/Screens.styles';
 import ActionButton from '../components/ActionButton';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 // Let's simulate a data from the server
 const apiaries = [
@@ -21,12 +22,14 @@ interface Props {
 
 const ApiariesScreen = () => {
   const apiaryCard = ({ item }: Props) => (
-    <CardContainer>
-      <CardTitle>{item.name}</CardTitle>
-      <CardText>Hives: {item.hives}</CardText>
-      <CardText>Location: {item.location}</CardText>
-      <CardText>Notes: {item.notes}</CardText>
-    </CardContainer>
+    <TouchableOpacity onPress={()=>console.log("pressed")}>
+      <CardContainer>
+        <CardTitle>{item.name}</CardTitle>
+        <CardText>Hives: {item.hives}</CardText>
+        <CardText>Location: {item.location}</CardText>
+        <CardText>Notes: {item.notes}</CardText>
+      </CardContainer>
+    </TouchableOpacity>
   );
 
   return (
