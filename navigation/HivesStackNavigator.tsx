@@ -26,7 +26,7 @@ const HivesStackNavigator = ({ toggleTheme }: Props) => {
             <Stack.Screen name="Hives">
                 {props => < HivesScreen {...props} toggleTheme={toggleTheme} />}
             </Stack.Screen>
-            <Stack.Screen name="HiveDetails">
+            <Stack.Screen name="Hive Details">
                 {props => < HiveDetailsScreen {...props} toggleTheme={toggleTheme} />}
             </Stack.Screen>
         </Stack.Navigator>

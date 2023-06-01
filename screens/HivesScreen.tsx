@@ -14,6 +14,7 @@ const hives = [
 
 interface HivesScreenProps {
   item: {
+    id: string;
     name: string;
     bees: string;
     health: string;
@@ -24,7 +25,7 @@ interface HivesScreenProps {
 
 const HivesScreen = ({navigation}: any) => {
   const hiveCard = ({ item }: HivesScreenProps) => (
-    <TouchableOpacity onPress={() => navigation.navigate('HiveDetails', {id:item.id})}>
+    <TouchableOpacity onPress={() => navigation.navigate('Hive Details', {id:item.id})}>
       <CardContainer style={{ flexDirection: 'row', alignItems: 'center' }}>
         {/* Render the image if exists, else render the default icon */}
         {item.imageUrl !== ''
