@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyledText, Container, CardContainer, CardText, CardTitle } from './styles/Screens.styles';
 import ActionButton from '../components/ActionButton';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import HiveCard, { Hive } from '../components/HiveCard';
 // Let's simulate data from the server
 const hives = [
   { id: '1', name: 'Hive 1', bees: 3000, health: 'Good', imageUrl: '', notes: 'Produces wildflower honey.' },
@@ -12,44 +12,26 @@ const hives = [
   //... more hives
 ];
 
-interface HivesScreenProps {
-  item: {
-    id: string;
-    name: string;
-    bees: string;
-    health: string;
-    notes: string;
-    imageUrl: string;
-  };
-};
+
 
 const HivesScreen = ({navigation}: any) => {
-  const hiveCard = ({ item }: HivesScreenProps) => (
-    <TouchableOpacity onPress={() => navigation.navigate('Hive Details', {id:item.id})}>
-      <CardContainer style={{ flexDirection: 'row', alignItems: 'center' }}>
-        {/* Render the image if exists, else render the default icon */}
-        {item.imageUrl !== ''
-          ? <Image source={{ uri: item.imageUrl }} style={{ width: 30, height: 30, borderRadius: 25 }} />
-          : <MaterialCommunityIcons name="beehive-outline" size={30} color="black" />
-        }
-        <View style={{ marginLeft: 10 }}>
-          <CardTitle>{item.name}</CardTitle>
-          <CardText>Bees: {item.bees}</CardText>
-          <CardText>Health: {item.health}</CardText>
-          <CardText>Notes: {item.notes}</CardText>
-        </View>
-      </CardContainer>
-    </TouchableOpacity>
-  );
+  /* custom render function for the HiveCard */
+  const renderHiveCard = ({item}: {item:Hive}) => {
+    const handleHiveCardPress = () => {
+      navigation.navigate('Hive Details', {id: item.id});
+    }
+    return <HiveCard item={item} onPress={handleHiveCardPress}/>;
+  }
+
 
   return (
     <Container>
       <FlatList
         data={hives}
-        renderItem={hiveCard}
+        renderItem={renderHiveCard}
         keyExtractor={item => item.id}
       />
-      <ActionButton />
+      <ActionButton onPress={() => console.log("action pressed")}/>
     </Container>
   );
 };
