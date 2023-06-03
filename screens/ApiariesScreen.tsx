@@ -5,6 +5,7 @@ import ActionButton from '../components/ActionButton';
 
 import ApiaryCard from '../components/ApiaryCard';
 import { Apiary } from '../components/ApiaryCard';
+
 // Let's simulate a data from the server
 const apiaries = [
   { id: '1', name: 'Apiary 1', hives: 5, location: 'Farmville, VA', notes: 'Beside the apple orchard.' },
@@ -13,7 +14,11 @@ const apiaries = [
 ];
 
 const ApiariesScreen = () => {
-  /* custom render function for the ApiaryCard component */
+  /* custom render function for the ApiaryCard component 
+    { item: Apiary } -- destructuring the item property
+    and specifying its type as the 'Apiary' interface
+    this allows direct access to item and enforces type checking
+  */
   const renderApiaryCard = ({ item }: { item: Apiary }) => {
     const handleApiaryCardPress = () => {
       console.log("card pressed", item.name);
@@ -25,6 +30,10 @@ const ApiariesScreen = () => {
     );
   };
 
+  const handleActionBttnPress = () => {
+    console.log("pressed");
+  };
+
 
   return (
     <Container>
@@ -33,7 +42,7 @@ const ApiariesScreen = () => {
         renderItem={renderApiaryCard}
         keyExtractor={item => item.id}
       />
-      <ActionButton />
+      <ActionButton onPress={() => console.log("Pressed")}/>
     </Container>
   );
 };
