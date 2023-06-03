@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+//import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStackNavigator from './HomeStackNavigator';
 import SettingsStackNavigator from './SettingsStackNavigator';
 import ApiariesStackNavigator from './ApiariesStackNavigator';
@@ -11,8 +12,8 @@ import AlertsStackNavigator from './AlertsStackNavigator';
 import { ThemeContext } from 'styled-components/native';
 import { lightTheme } from '../themes/themes'; 
 
-//const Tab = createBottomTabNavigator();
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
+//const Tab = createMaterialBottomTabNavigator();
 
 interface Props {
     toggleTheme: () => void;
@@ -26,12 +27,14 @@ const BottomTabNavigator = ({ toggleTheme }: Props) => {
     return (
         <Tab.Navigator
             initialRouteName="HomeStack"
-            activeColor={theme.activeColor}
-            inactiveColor={theme.inactiveColor}
-            shifting={true}
-            barStyle={
-                theme.barStyle
-            }
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: theme.activeColor,
+                tabBarInactiveTintColor: theme.inactiveColor,
+                tabBarStyle: {
+                    backgroundColor: theme.barStyle.backgroundColor
+                }
+            }}
         >
 
             <Tab.Screen name="HomeStack"

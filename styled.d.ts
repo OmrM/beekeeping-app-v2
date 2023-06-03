@@ -24,8 +24,6 @@ declare module 'styled-components/native' {
             secondary: string
         } */
         // define other theme properties
-        background: string;
-        text: string;
         activeColor: string;
         inactiveColor: string;
         headerStyle: {
@@ -35,6 +33,25 @@ declare module 'styled-components/native' {
         barStyle: { 
             backgroundColor: string;
             height: integer;
+        }
+
+        background: string;
+        textColor: string;
+
+        cardStyle: {
+            backgroundColor: string;
+        }
+        cardTitle: {
+            fontSize: string;
+            fontWeight: string;
+        }
+        cardText: {
+            fontSize: string;
+            fontWeight: string;
+        }
+        button: {
+            backgroundColor: string;
+            textColor: string;
         }
     };
 };
