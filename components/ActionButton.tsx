@@ -1,15 +1,19 @@
 import React from 'react';
 import { ButtonText, ButtonWrapper, CircleButton } from './styles/ActionButton.styles';
 
-const ActionButton = () => {
+interface ActionButtonProps { 
+  onPress: () => void;
+};
 
-    return (
-        <ButtonWrapper>
-        <CircleButton onPress={() => navigation.navigate('New Apiary')}>
-          <ButtonText>+</ButtonText>
-        </CircleButton>
-      </ButtonWrapper>
-    );
+const ActionButton = ({ onPress }: ActionButtonProps) => {
+
+  return (
+    <ButtonWrapper>
+      <CircleButton onPress={onPress}>
+        <ButtonText>+</ButtonText>
+      </CircleButton>
+    </ButtonWrapper>
+  );
 };
 
 export default ActionButton;

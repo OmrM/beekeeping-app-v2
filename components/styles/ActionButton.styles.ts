@@ -8,7 +8,7 @@ export const ButtonWrapper = styled.View`
     bottom: 30px;
 `;
 
-export const CircleButton = styled.Pressable`
+export const CircleButton = styled.TouchableOpacity`
     width: 60px;
     height: 60px;
     background-color: ${ ({theme}) => theme.button.backgroundColor};
