@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-beekeepingappv2-dev-200448-authRole",
+      "UnauthRoleArn": "arn:aws:iam::687621098641:role/amplify-beekeepingappv2-dev-200448-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::687621098641:role/amplify-beekeepingappv2-dev-200448-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-beekeepingappv2-dev-200448-deployment",
+      "UnauthRoleName": "amplify-beekeepingappv2-dev-200448-unauthRole",
+      "StackName": "amplify-beekeepingappv2-dev-200448",
+      "StackId": "arn:aws:cloudformation:us-west-2:687621098641:stack/amplify-beekeepingappv2-dev-200448/308d9750-027c-11ee-9853-02c287b1d993",
+      "AmplifyAppId": "d1l3zqey39g1m6"
+    }
+  }
+}
