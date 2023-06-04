@@ -36,26 +36,27 @@ type S3Object {
 type User @model {
   id: ID!
   username: String!
-  apiaries: [Apiary] @connection(keyName: "byUser", fields: ["id"])
+  apiaries: [Apiary] @hasMany
 }
 
-type Apiary @model @key(name: "byUser", fields: ["userID"]) {
+type Apiary @model {
   id: ID!
   userID: ID!
-  user: User @connection(fields: ["userID"])
+  user: User @belongsTo
   name: String!
   location: String
   notes: String
   image: S3Object
-  hives: [Hive] @connection(keyName: "byApiary", fields: ["id"])
+
+  hives: [Hive] @hasMany
 }
 
-type Hive @model @key(name: "byApiary", fields: ["apiaryID"]) {
+type Hive @model {
   id: ID!
   apiaryID: ID!
-  apiary: Apiary @connection(fields: ["apiaryID"])
+  apiary: Apiary @belongsTo
   name: String!
   notes: String
   image: S3Object
-  // Add more fields as needed for Hive data.
+
 }

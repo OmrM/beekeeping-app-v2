@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { StatusBar } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { Amplify, API, graphqlOperation } from 'aws-amplify';
+import awsconfig from './src/aws-exports';
+Amplify.configure(awsconfig);
 
 
 //theming dependencies:
