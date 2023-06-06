@@ -15,36 +15,9 @@ import { listApiaries } from '../src/graphql/queries';
 const ApiariesScreen = () => {
   const [apiaries, setApiaries] = useState<Apiary[]>([]); // setting it as the type Apiary from our card component
 
-
-
-
-
   useEffect(() => {
     getApiaries();
-
   }, []);
-
-
-/*   const apiaryData = [
-    { id: '1', name: 'Apiary 1', hives: 5, location: 'Farmville, VA', notes: 'Beside the apple orchard.' },
-    { id: '2', name: 'Apiary 2', hives: 3, location: 'Lynchburg, VA', notes: 'Next to the creek.' },
-    //... more apiaries
-  ]; */
-
-
-
-/*   const getApiaries = async () => {
-    const apiaryData = await API.graphql<GraphQLQuery<ListApiariesQuery>>({
-      query: listApiaries
-    });
-    if (!apiaryData.data || !apiaryData.data.listApiaries) {
-      console.log('No apiaries found');
-      return;
-    }
-    const apiaryDataItems = apiaryData.data.listApiaries.items ?? [];
-    setApiaries(apiaryDataItems as unknown as Apiary[]);
-  };
- */
 
   const getApiaries = async () => {
     try{
@@ -61,7 +34,6 @@ const ApiariesScreen = () => {
     console.log("pressed");
 
   };
-
 
   /* custom render function for the ApiaryCard component 
       { item: Apiary } -- destructuring the item property
