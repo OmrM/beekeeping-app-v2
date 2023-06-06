@@ -10,13 +10,27 @@ import { GraphQLQuery } from '@aws-amplify/api';
 import { CreateApiaryInput, CreateApiaryMutation, GetApiaryQuery, ListApiariesQuery,  } from '../src/API';
 import { createApiary } from '../src/graphql/mutations';
 import { listApiaries } from '../src/graphql/queries';
+import { useIsFocused } from '@react-navigation/native';
+import { RefreshControl } from 'react-native-gesture-handler';
 
 
 const ApiariesScreen = () => {
   const [apiaries, setApiaries] = useState<Apiary[]>([]); // setting it as the type Apiary from our card component
+  const isFocused = useIsFocused();
+  const [refreshing, setRefreshing] = React.useState(false);
 
   useEffect(() => {
+    // Listener method https://stackoverflow.com/questions/46504660/refresh-previous-screen-on-goback
+    isFocused && getApiaries();
+  }, [isFocused]);
+
+  // Refresh control function: 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
     getApiaries();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000)
   }, []);
 
   const getApiaries = async () => {
@@ -55,6 +69,7 @@ const ApiariesScreen = () => {
         data={apiaries}
         renderItem={renderApiaryCard}
         keyExtractor={item => item.id}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
       />
       <ActionButton onPress={() => console.log("Pressed")} />
     </Container>
