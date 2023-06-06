@@ -47,7 +47,7 @@ type Apiary @model {
   location: String
   notes: String
   image: S3Object
-
+  hiveCount: Int! @computed(fn: count(hives))
   hives: [Hive] @hasMany
 }
 
