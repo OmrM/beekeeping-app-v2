@@ -4,8 +4,8 @@ import styled from 'styled-components/native';
 
 export const ButtonWrapper = styled.View`
     position: absolute;
-    right: 30px;
-    bottom: 30px;
+    right: 20px;
+    bottom: 20px;
 `;
 
 export const CircleButton = styled.TouchableOpacity`
