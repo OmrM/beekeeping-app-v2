@@ -6,7 +6,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
-Amplify.configure(awsconfig);
+import { Storage } from 'aws-amplify';
+Amplify.configure({
+  ...awsconfig,
+  Storage: {
+    AWSS3: {
+      region: 'us-west-2', // Replace with your AWS region
+    },
+  },
+});
 
 
 //theming dependencies:
