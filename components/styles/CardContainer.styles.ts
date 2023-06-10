@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import styled from 'styled-components/native';
 
 export const CardContainer = styled.Pressable`
-    margin: 0px 20px 20px 20px;
+    margin: 10px 20px 10px 20px;
     padding: 15px;
     border-radius:8px;
     background-color: ${({ theme }) => theme.cardStyle.backgroundColor};
