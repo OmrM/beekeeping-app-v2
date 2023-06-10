@@ -9,7 +9,6 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
     flex: 1;
     padding-top: 20px;
-    padding-horizontal: 20px;
     background-color: ${({ theme }) => theme.background};
 `;
 
@@ -17,6 +16,7 @@ export const StyledText = styled.Text`
     color: ${({ theme }) => theme.textColor};
 `;
 
+//TODO: remove these styles and use the ones in components folder
 export const CardContainer = styled.Pressable`
     margin-bottom: 20px;
     padding: 20px;
@@ -37,10 +37,12 @@ export const CardTitle = styled.Text`
 export const CardText = styled.Text`
     font-size: ${({ theme }) => theme.cardText.fontSize};
     font-weight:  ${({ theme }) => theme.cardText.fontWeight};
-    color: ${ ({theme}) => theme.textColor}
+    color: ${ ({theme}) => theme.textColor};
 `;
 
-
+export const InputContainer = styled.View`
+    margin: 0px 20px 20px 20px;
+`;
 //if I wanted to use the theming inline in a component: 
 /* const SettingsScreen = ({toggleTheme}) => {
 
