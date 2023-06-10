@@ -13,8 +13,13 @@ import { listApiaries } from '../src/graphql/queries';
 import { useIsFocused } from '@react-navigation/native';
 import { RefreshControl } from 'react-native-gesture-handler';
 
+interface ApiariesScreenProps {
+  navigation:{
+    navigate: Screen;
+  }
+}
 
-const ApiariesScreen = () => {
+const ApiariesScreen = ({navigation}: ApiariesScreenProps) => {
   const [apiaries, setApiaries] = useState<Apiary[]>([]); // setting it as the type Apiary from our card component
   const isFocused = useIsFocused();
   const [refreshing, setRefreshing] = React.useState(false);
@@ -45,8 +50,7 @@ const ApiariesScreen = () => {
   };
 
   const handleActionBttnPress = async () => {
-    console.log("pressed");
-
+    navigation.navigate("New Apiary")
   };
 
   /* custom render function for the ApiaryCard component 
@@ -71,7 +75,7 @@ const ApiariesScreen = () => {
         keyExtractor={item => item.id}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
       />
-      <ActionButton onPress={() => console.log("Pressed")} />
+      <ActionButton onPress={handleActionBttnPress} />
     </Container>
   );
 };
