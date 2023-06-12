@@ -21,18 +21,6 @@ type Comment @model {
   content: String!
 }
 
-
-
-type S3Object {
-  bucket: String!
-  region: String!
-  key: String!
-}
-
-
-
-
-
 type User @model {
   id: ID!
   username: String!
@@ -46,17 +34,25 @@ type Apiary @model {
   name: String!
   location: String
   notes: String
-  image: S3Object
-  hiveCount: Int! @computed(fn: count(hives))
+  image: String
   hives: [Hive] @hasMany
 }
 
 type Hive @model {
   id: ID!
-  apiaryID: ID!
   apiary: Apiary @belongsTo
   name: String!
   notes: String
-  image: S3Object
-
+  image: String
+  inspections: [Inspection] @hasMany
 }
+
+type Inspection @model {
+  id: ID!
+  hive: Hive @belongsTo
+  date: String!
+  notes: String
+  image: String
+}
+
+
