@@ -204,18 +204,11 @@ export type Apiary = {
   name: string,
   location?: string | null,
   notes?: string | null,
-  image?: S3Object | null,
+  image?: string | null,
   hives?: ModelHiveConnection | null,
   createdAt: string,
   updatedAt: string,
   userApiariesId?: string | null,
-};
-
-export type S3Object = {
-  __typename: "S3Object",
-  bucket: string,
-  region: string,
-  key: string,
 };
 
 export type ModelHiveConnection = {
@@ -227,14 +220,32 @@ export type ModelHiveConnection = {
 export type Hive = {
   __typename: "Hive",
   id: string,
-  apiaryID: string,
   apiary?: Apiary | null,
   name: string,
   notes?: string | null,
-  image?: S3Object | null,
+  image?: string | null,
+  inspections?: ModelInspectionConnection | null,
   createdAt: string,
   updatedAt: string,
   apiaryHivesId?: string | null,
+};
+
+export type ModelInspectionConnection = {
+  __typename: "ModelInspectionConnection",
+  items:  Array<Inspection | null >,
+  nextToken?: string | null,
+};
+
+export type Inspection = {
+  __typename: "Inspection",
+  id: string,
+  hive?: Hive | null,
+  date: string,
+  notes?: string | null,
+  image?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  hiveInspectionsId?: string | null,
 };
 
 export type UpdateUserInput = {
@@ -252,14 +263,8 @@ export type CreateApiaryInput = {
   name: string,
   location?: string | null,
   notes?: string | null,
-  image?: S3ObjectInput | null,
+  image?: string | null,
   userApiariesId?: string | null,
-};
-
-export type S3ObjectInput = {
-  bucket: string,
-  region: string,
-  key: string,
 };
 
 export type ModelApiaryConditionInput = {
@@ -267,6 +272,7 @@ export type ModelApiaryConditionInput = {
   name?: ModelStringInput | null,
   location?: ModelStringInput | null,
   notes?: ModelStringInput | null,
+  image?: ModelStringInput | null,
   and?: Array< ModelApiaryConditionInput | null > | null,
   or?: Array< ModelApiaryConditionInput | null > | null,
   not?: ModelApiaryConditionInput | null,
@@ -279,7 +285,7 @@ export type UpdateApiaryInput = {
   name?: string | null,
   location?: string | null,
   notes?: string | null,
-  image?: S3ObjectInput | null,
+  image?: string | null,
   userApiariesId?: string | null,
 };
 
@@ -289,17 +295,16 @@ export type DeleteApiaryInput = {
 
 export type CreateHiveInput = {
   id?: string | null,
-  apiaryID: string,
   name: string,
   notes?: string | null,
-  image?: S3ObjectInput | null,
+  image?: string | null,
   apiaryHivesId?: string | null,
 };
 
 export type ModelHiveConditionInput = {
-  apiaryID?: ModelIDInput | null,
   name?: ModelStringInput | null,
   notes?: ModelStringInput | null,
+  image?: ModelStringInput | null,
   and?: Array< ModelHiveConditionInput | null > | null,
   or?: Array< ModelHiveConditionInput | null > | null,
   not?: ModelHiveConditionInput | null,
@@ -308,14 +313,43 @@ export type ModelHiveConditionInput = {
 
 export type UpdateHiveInput = {
   id: string,
-  apiaryID?: string | null,
   name?: string | null,
   notes?: string | null,
-  image?: S3ObjectInput | null,
+  image?: string | null,
   apiaryHivesId?: string | null,
 };
 
 export type DeleteHiveInput = {
+  id: string,
+};
+
+export type CreateInspectionInput = {
+  id?: string | null,
+  date: string,
+  notes?: string | null,
+  image?: string | null,
+  hiveInspectionsId?: string | null,
+};
+
+export type ModelInspectionConditionInput = {
+  date?: ModelStringInput | null,
+  notes?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  and?: Array< ModelInspectionConditionInput | null > | null,
+  or?: Array< ModelInspectionConditionInput | null > | null,
+  not?: ModelInspectionConditionInput | null,
+  hiveInspectionsId?: ModelIDInput | null,
+};
+
+export type UpdateInspectionInput = {
+  id: string,
+  date?: string | null,
+  notes?: string | null,
+  image?: string | null,
+  hiveInspectionsId?: string | null,
+};
+
+export type DeleteInspectionInput = {
   id: string,
 };
 
@@ -371,6 +405,7 @@ export type ModelApiaryFilterInput = {
   name?: ModelStringInput | null,
   location?: ModelStringInput | null,
   notes?: ModelStringInput | null,
+  image?: ModelStringInput | null,
   and?: Array< ModelApiaryFilterInput | null > | null,
   or?: Array< ModelApiaryFilterInput | null > | null,
   not?: ModelApiaryFilterInput | null,
@@ -379,13 +414,24 @@ export type ModelApiaryFilterInput = {
 
 export type ModelHiveFilterInput = {
   id?: ModelIDInput | null,
-  apiaryID?: ModelIDInput | null,
   name?: ModelStringInput | null,
   notes?: ModelStringInput | null,
+  image?: ModelStringInput | null,
   and?: Array< ModelHiveFilterInput | null > | null,
   or?: Array< ModelHiveFilterInput | null > | null,
   not?: ModelHiveFilterInput | null,
   apiaryHivesId?: ModelIDInput | null,
+};
+
+export type ModelInspectionFilterInput = {
+  id?: ModelIDInput | null,
+  date?: ModelStringInput | null,
+  notes?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  and?: Array< ModelInspectionFilterInput | null > | null,
+  or?: Array< ModelInspectionFilterInput | null > | null,
+  not?: ModelInspectionFilterInput | null,
+  hiveInspectionsId?: ModelIDInput | null,
 };
 
 export type ModelSubscriptionBlogFilterInput = {
@@ -452,17 +498,27 @@ export type ModelSubscriptionApiaryFilterInput = {
   name?: ModelSubscriptionStringInput | null,
   location?: ModelSubscriptionStringInput | null,
   notes?: ModelSubscriptionStringInput | null,
+  image?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionApiaryFilterInput | null > | null,
   or?: Array< ModelSubscriptionApiaryFilterInput | null > | null,
 };
 
 export type ModelSubscriptionHiveFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  apiaryID?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   notes?: ModelSubscriptionStringInput | null,
+  image?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionHiveFilterInput | null > | null,
   or?: Array< ModelSubscriptionHiveFilterInput | null > | null,
+};
+
+export type ModelSubscriptionInspectionFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  date?: ModelSubscriptionStringInput | null,
+  notes?: ModelSubscriptionStringInput | null,
+  image?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionInspectionFilterInput | null > | null,
+  or?: Array< ModelSubscriptionInspectionFilterInput | null > | null,
 };
 
 export type CreateBlogMutationVariables = {
@@ -787,6 +843,7 @@ export type CreateUserMutation = {
         name: string,
         location?: string | null,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         userApiariesId?: string | null,
@@ -817,6 +874,7 @@ export type UpdateUserMutation = {
         name: string,
         location?: string | null,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         userApiariesId?: string | null,
@@ -847,6 +905,7 @@ export type DeleteUserMutation = {
         name: string,
         location?: string | null,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         userApiariesId?: string | null,
@@ -882,20 +941,15 @@ export type CreateApiaryMutation = {
     name: string,
     location?: string | null,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
-    } | null,
+    image?: string | null,
     hives?:  {
       __typename: "ModelHiveConnection",
       items:  Array< {
         __typename: "Hive",
         id: string,
-        apiaryID: string,
         name: string,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         apiaryHivesId?: string | null,
@@ -932,20 +986,15 @@ export type UpdateApiaryMutation = {
     name: string,
     location?: string | null,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
-    } | null,
+    image?: string | null,
     hives?:  {
       __typename: "ModelHiveConnection",
       items:  Array< {
         __typename: "Hive",
         id: string,
-        apiaryID: string,
         name: string,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         apiaryHivesId?: string | null,
@@ -982,20 +1031,15 @@ export type DeleteApiaryMutation = {
     name: string,
     location?: string | null,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
-    } | null,
+    image?: string | null,
     hives?:  {
       __typename: "ModelHiveConnection",
       items:  Array< {
         __typename: "Hive",
         id: string,
-        apiaryID: string,
         name: string,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         apiaryHivesId?: string | null,
@@ -1017,7 +1061,6 @@ export type CreateHiveMutation = {
   createHive?:  {
     __typename: "Hive",
     id: string,
-    apiaryID: string,
     apiary?:  {
       __typename: "Apiary",
       id: string,
@@ -1032,12 +1075,7 @@ export type CreateHiveMutation = {
       name: string,
       location?: string | null,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
-      } | null,
+      image?: string | null,
       hives?:  {
         __typename: "ModelHiveConnection",
         nextToken?: string | null,
@@ -1048,11 +1086,20 @@ export type CreateHiveMutation = {
     } | null,
     name: string,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
+    image?: string | null,
+    inspections?:  {
+      __typename: "ModelInspectionConnection",
+      items:  Array< {
+        __typename: "Inspection",
+        id: string,
+        date: string,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        hiveInspectionsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1069,7 +1116,6 @@ export type UpdateHiveMutation = {
   updateHive?:  {
     __typename: "Hive",
     id: string,
-    apiaryID: string,
     apiary?:  {
       __typename: "Apiary",
       id: string,
@@ -1084,12 +1130,7 @@ export type UpdateHiveMutation = {
       name: string,
       location?: string | null,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
-      } | null,
+      image?: string | null,
       hives?:  {
         __typename: "ModelHiveConnection",
         nextToken?: string | null,
@@ -1100,11 +1141,20 @@ export type UpdateHiveMutation = {
     } | null,
     name: string,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
+    image?: string | null,
+    inspections?:  {
+      __typename: "ModelInspectionConnection",
+      items:  Array< {
+        __typename: "Inspection",
+        id: string,
+        date: string,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        hiveInspectionsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1121,7 +1171,6 @@ export type DeleteHiveMutation = {
   deleteHive?:  {
     __typename: "Hive",
     id: string,
-    apiaryID: string,
     apiary?:  {
       __typename: "Apiary",
       id: string,
@@ -1136,12 +1185,7 @@ export type DeleteHiveMutation = {
       name: string,
       location?: string | null,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
-      } | null,
+      image?: string | null,
       hives?:  {
         __typename: "ModelHiveConnection",
         nextToken?: string | null,
@@ -1152,15 +1196,156 @@ export type DeleteHiveMutation = {
     } | null,
     name: string,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
+    image?: string | null,
+    inspections?:  {
+      __typename: "ModelInspectionConnection",
+      items:  Array< {
+        __typename: "Inspection",
+        id: string,
+        date: string,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        hiveInspectionsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     apiaryHivesId?: string | null,
+  } | null,
+};
+
+export type CreateInspectionMutationVariables = {
+  input: CreateInspectionInput,
+  condition?: ModelInspectionConditionInput | null,
+};
+
+export type CreateInspectionMutation = {
+  createInspection?:  {
+    __typename: "Inspection",
+    id: string,
+    hive?:  {
+      __typename: "Hive",
+      id: string,
+      apiary?:  {
+        __typename: "Apiary",
+        id: string,
+        userID: string,
+        name: string,
+        location?: string | null,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userApiariesId?: string | null,
+      } | null,
+      name: string,
+      notes?: string | null,
+      image?: string | null,
+      inspections?:  {
+        __typename: "ModelInspectionConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      apiaryHivesId?: string | null,
+    } | null,
+    date: string,
+    notes?: string | null,
+    image?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    hiveInspectionsId?: string | null,
+  } | null,
+};
+
+export type UpdateInspectionMutationVariables = {
+  input: UpdateInspectionInput,
+  condition?: ModelInspectionConditionInput | null,
+};
+
+export type UpdateInspectionMutation = {
+  updateInspection?:  {
+    __typename: "Inspection",
+    id: string,
+    hive?:  {
+      __typename: "Hive",
+      id: string,
+      apiary?:  {
+        __typename: "Apiary",
+        id: string,
+        userID: string,
+        name: string,
+        location?: string | null,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userApiariesId?: string | null,
+      } | null,
+      name: string,
+      notes?: string | null,
+      image?: string | null,
+      inspections?:  {
+        __typename: "ModelInspectionConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      apiaryHivesId?: string | null,
+    } | null,
+    date: string,
+    notes?: string | null,
+    image?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    hiveInspectionsId?: string | null,
+  } | null,
+};
+
+export type DeleteInspectionMutationVariables = {
+  input: DeleteInspectionInput,
+  condition?: ModelInspectionConditionInput | null,
+};
+
+export type DeleteInspectionMutation = {
+  deleteInspection?:  {
+    __typename: "Inspection",
+    id: string,
+    hive?:  {
+      __typename: "Hive",
+      id: string,
+      apiary?:  {
+        __typename: "Apiary",
+        id: string,
+        userID: string,
+        name: string,
+        location?: string | null,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userApiariesId?: string | null,
+      } | null,
+      name: string,
+      notes?: string | null,
+      image?: string | null,
+      inspections?:  {
+        __typename: "ModelInspectionConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      apiaryHivesId?: string | null,
+    } | null,
+    date: string,
+    notes?: string | null,
+    image?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    hiveInspectionsId?: string | null,
   } | null,
 };
 
@@ -1365,6 +1550,7 @@ export type GetUserQuery = {
         name: string,
         location?: string | null,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         userApiariesId?: string | null,
@@ -1423,20 +1609,15 @@ export type GetApiaryQuery = {
     name: string,
     location?: string | null,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
-    } | null,
+    image?: string | null,
     hives?:  {
       __typename: "ModelHiveConnection",
       items:  Array< {
         __typename: "Hive",
         id: string,
-        apiaryID: string,
         name: string,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         apiaryHivesId?: string | null,
@@ -1472,12 +1653,7 @@ export type ListApiariesQuery = {
       name: string,
       location?: string | null,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
-      } | null,
+      image?: string | null,
       hives?:  {
         __typename: "ModelHiveConnection",
         nextToken?: string | null,
@@ -1498,7 +1674,6 @@ export type GetHiveQuery = {
   getHive?:  {
     __typename: "Hive",
     id: string,
-    apiaryID: string,
     apiary?:  {
       __typename: "Apiary",
       id: string,
@@ -1513,12 +1688,7 @@ export type GetHiveQuery = {
       name: string,
       location?: string | null,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
-      } | null,
+      image?: string | null,
       hives?:  {
         __typename: "ModelHiveConnection",
         nextToken?: string | null,
@@ -1529,11 +1699,20 @@ export type GetHiveQuery = {
     } | null,
     name: string,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
+    image?: string | null,
+    inspections?:  {
+      __typename: "ModelInspectionConnection",
+      items:  Array< {
+        __typename: "Inspection",
+        id: string,
+        date: string,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        hiveInspectionsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1553,7 +1732,6 @@ export type ListHivesQuery = {
     items:  Array< {
       __typename: "Hive",
       id: string,
-      apiaryID: string,
       apiary?:  {
         __typename: "Apiary",
         id: string,
@@ -1561,21 +1739,97 @@ export type ListHivesQuery = {
         name: string,
         location?: string | null,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         userApiariesId?: string | null,
       } | null,
       name: string,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
+      image?: string | null,
+      inspections?:  {
+        __typename: "ModelInspectionConnection",
+        nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       apiaryHivesId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetInspectionQueryVariables = {
+  id: string,
+};
+
+export type GetInspectionQuery = {
+  getInspection?:  {
+    __typename: "Inspection",
+    id: string,
+    hive?:  {
+      __typename: "Hive",
+      id: string,
+      apiary?:  {
+        __typename: "Apiary",
+        id: string,
+        userID: string,
+        name: string,
+        location?: string | null,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userApiariesId?: string | null,
+      } | null,
+      name: string,
+      notes?: string | null,
+      image?: string | null,
+      inspections?:  {
+        __typename: "ModelInspectionConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      apiaryHivesId?: string | null,
+    } | null,
+    date: string,
+    notes?: string | null,
+    image?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    hiveInspectionsId?: string | null,
+  } | null,
+};
+
+export type ListInspectionsQueryVariables = {
+  filter?: ModelInspectionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListInspectionsQuery = {
+  listInspections?:  {
+    __typename: "ModelInspectionConnection",
+    items:  Array< {
+      __typename: "Inspection",
+      id: string,
+      hive?:  {
+        __typename: "Hive",
+        id: string,
+        name: string,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        apiaryHivesId?: string | null,
+      } | null,
+      date: string,
+      notes?: string | null,
+      image?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      hiveInspectionsId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1893,6 +2147,7 @@ export type OnCreateUserSubscription = {
         name: string,
         location?: string | null,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         userApiariesId?: string | null,
@@ -1922,6 +2177,7 @@ export type OnUpdateUserSubscription = {
         name: string,
         location?: string | null,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         userApiariesId?: string | null,
@@ -1951,6 +2207,7 @@ export type OnDeleteUserSubscription = {
         name: string,
         location?: string | null,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         userApiariesId?: string | null,
@@ -1985,20 +2242,15 @@ export type OnCreateApiarySubscription = {
     name: string,
     location?: string | null,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
-    } | null,
+    image?: string | null,
     hives?:  {
       __typename: "ModelHiveConnection",
       items:  Array< {
         __typename: "Hive",
         id: string,
-        apiaryID: string,
         name: string,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         apiaryHivesId?: string | null,
@@ -2034,20 +2286,15 @@ export type OnUpdateApiarySubscription = {
     name: string,
     location?: string | null,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
-    } | null,
+    image?: string | null,
     hives?:  {
       __typename: "ModelHiveConnection",
       items:  Array< {
         __typename: "Hive",
         id: string,
-        apiaryID: string,
         name: string,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         apiaryHivesId?: string | null,
@@ -2083,20 +2330,15 @@ export type OnDeleteApiarySubscription = {
     name: string,
     location?: string | null,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
-    } | null,
+    image?: string | null,
     hives?:  {
       __typename: "ModelHiveConnection",
       items:  Array< {
         __typename: "Hive",
         id: string,
-        apiaryID: string,
         name: string,
         notes?: string | null,
+        image?: string | null,
         createdAt: string,
         updatedAt: string,
         apiaryHivesId?: string | null,
@@ -2117,7 +2359,6 @@ export type OnCreateHiveSubscription = {
   onCreateHive?:  {
     __typename: "Hive",
     id: string,
-    apiaryID: string,
     apiary?:  {
       __typename: "Apiary",
       id: string,
@@ -2132,12 +2373,7 @@ export type OnCreateHiveSubscription = {
       name: string,
       location?: string | null,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
-      } | null,
+      image?: string | null,
       hives?:  {
         __typename: "ModelHiveConnection",
         nextToken?: string | null,
@@ -2148,11 +2384,20 @@ export type OnCreateHiveSubscription = {
     } | null,
     name: string,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
+    image?: string | null,
+    inspections?:  {
+      __typename: "ModelInspectionConnection",
+      items:  Array< {
+        __typename: "Inspection",
+        id: string,
+        date: string,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        hiveInspectionsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2168,7 +2413,6 @@ export type OnUpdateHiveSubscription = {
   onUpdateHive?:  {
     __typename: "Hive",
     id: string,
-    apiaryID: string,
     apiary?:  {
       __typename: "Apiary",
       id: string,
@@ -2183,12 +2427,7 @@ export type OnUpdateHiveSubscription = {
       name: string,
       location?: string | null,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
-      } | null,
+      image?: string | null,
       hives?:  {
         __typename: "ModelHiveConnection",
         nextToken?: string | null,
@@ -2199,11 +2438,20 @@ export type OnUpdateHiveSubscription = {
     } | null,
     name: string,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
+    image?: string | null,
+    inspections?:  {
+      __typename: "ModelInspectionConnection",
+      items:  Array< {
+        __typename: "Inspection",
+        id: string,
+        date: string,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        hiveInspectionsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2219,7 +2467,6 @@ export type OnDeleteHiveSubscription = {
   onDeleteHive?:  {
     __typename: "Hive",
     id: string,
-    apiaryID: string,
     apiary?:  {
       __typename: "Apiary",
       id: string,
@@ -2234,12 +2481,7 @@ export type OnDeleteHiveSubscription = {
       name: string,
       location?: string | null,
       notes?: string | null,
-      image?:  {
-        __typename: "S3Object",
-        bucket: string,
-        region: string,
-        key: string,
-      } | null,
+      image?: string | null,
       hives?:  {
         __typename: "ModelHiveConnection",
         nextToken?: string | null,
@@ -2250,14 +2492,152 @@ export type OnDeleteHiveSubscription = {
     } | null,
     name: string,
     notes?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      region: string,
-      key: string,
+    image?: string | null,
+    inspections?:  {
+      __typename: "ModelInspectionConnection",
+      items:  Array< {
+        __typename: "Inspection",
+        id: string,
+        date: string,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        hiveInspectionsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     apiaryHivesId?: string | null,
+  } | null,
+};
+
+export type OnCreateInspectionSubscriptionVariables = {
+  filter?: ModelSubscriptionInspectionFilterInput | null,
+};
+
+export type OnCreateInspectionSubscription = {
+  onCreateInspection?:  {
+    __typename: "Inspection",
+    id: string,
+    hive?:  {
+      __typename: "Hive",
+      id: string,
+      apiary?:  {
+        __typename: "Apiary",
+        id: string,
+        userID: string,
+        name: string,
+        location?: string | null,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userApiariesId?: string | null,
+      } | null,
+      name: string,
+      notes?: string | null,
+      image?: string | null,
+      inspections?:  {
+        __typename: "ModelInspectionConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      apiaryHivesId?: string | null,
+    } | null,
+    date: string,
+    notes?: string | null,
+    image?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    hiveInspectionsId?: string | null,
+  } | null,
+};
+
+export type OnUpdateInspectionSubscriptionVariables = {
+  filter?: ModelSubscriptionInspectionFilterInput | null,
+};
+
+export type OnUpdateInspectionSubscription = {
+  onUpdateInspection?:  {
+    __typename: "Inspection",
+    id: string,
+    hive?:  {
+      __typename: "Hive",
+      id: string,
+      apiary?:  {
+        __typename: "Apiary",
+        id: string,
+        userID: string,
+        name: string,
+        location?: string | null,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userApiariesId?: string | null,
+      } | null,
+      name: string,
+      notes?: string | null,
+      image?: string | null,
+      inspections?:  {
+        __typename: "ModelInspectionConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      apiaryHivesId?: string | null,
+    } | null,
+    date: string,
+    notes?: string | null,
+    image?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    hiveInspectionsId?: string | null,
+  } | null,
+};
+
+export type OnDeleteInspectionSubscriptionVariables = {
+  filter?: ModelSubscriptionInspectionFilterInput | null,
+};
+
+export type OnDeleteInspectionSubscription = {
+  onDeleteInspection?:  {
+    __typename: "Inspection",
+    id: string,
+    hive?:  {
+      __typename: "Hive",
+      id: string,
+      apiary?:  {
+        __typename: "Apiary",
+        id: string,
+        userID: string,
+        name: string,
+        location?: string | null,
+        notes?: string | null,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userApiariesId?: string | null,
+      } | null,
+      name: string,
+      notes?: string | null,
+      image?: string | null,
+      inspections?:  {
+        __typename: "ModelInspectionConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      apiaryHivesId?: string | null,
+    } | null,
+    date: string,
+    notes?: string | null,
+    image?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    hiveInspectionsId?: string | null,
   } | null,
 };

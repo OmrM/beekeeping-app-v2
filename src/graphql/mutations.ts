@@ -275,6 +275,7 @@ export const createUser = /* GraphQL */ `
           name
           location
           notes
+          image
           createdAt
           updatedAt
           userApiariesId
@@ -301,6 +302,7 @@ export const updateUser = /* GraphQL */ `
           name
           location
           notes
+          image
           createdAt
           updatedAt
           userApiariesId
@@ -327,6 +329,7 @@ export const deleteUser = /* GraphQL */ `
           name
           location
           notes
+          image
           createdAt
           updatedAt
           userApiariesId
@@ -358,17 +361,13 @@ export const createApiary = /* GraphQL */ `
       name
       location
       notes
-      image {
-        bucket
-        region
-        key
-      }
+      image
       hives {
         items {
           id
-          apiaryID
           name
           notes
+          image
           createdAt
           updatedAt
           apiaryHivesId
@@ -401,17 +400,13 @@ export const updateApiary = /* GraphQL */ `
       name
       location
       notes
-      image {
-        bucket
-        region
-        key
-      }
+      image
       hives {
         items {
           id
-          apiaryID
           name
           notes
+          image
           createdAt
           updatedAt
           apiaryHivesId
@@ -444,17 +439,13 @@ export const deleteApiary = /* GraphQL */ `
       name
       location
       notes
-      image {
-        bucket
-        region
-        key
-      }
+      image
       hives {
         items {
           id
-          apiaryID
           name
           notes
+          image
           createdAt
           updatedAt
           apiaryHivesId
@@ -474,7 +465,6 @@ export const createHive = /* GraphQL */ `
   ) {
     createHive(input: $input, condition: $condition) {
       id
-      apiaryID
       apiary {
         id
         userID
@@ -487,11 +477,7 @@ export const createHive = /* GraphQL */ `
         name
         location
         notes
-        image {
-          bucket
-          region
-          key
-        }
+        image
         hives {
           nextToken
         }
@@ -501,10 +487,18 @@ export const createHive = /* GraphQL */ `
       }
       name
       notes
-      image {
-        bucket
-        region
-        key
+      image
+      inspections {
+        items {
+          id
+          date
+          notes
+          image
+          createdAt
+          updatedAt
+          hiveInspectionsId
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -519,7 +513,6 @@ export const updateHive = /* GraphQL */ `
   ) {
     updateHive(input: $input, condition: $condition) {
       id
-      apiaryID
       apiary {
         id
         userID
@@ -532,11 +525,7 @@ export const updateHive = /* GraphQL */ `
         name
         location
         notes
-        image {
-          bucket
-          region
-          key
-        }
+        image
         hives {
           nextToken
         }
@@ -546,10 +535,18 @@ export const updateHive = /* GraphQL */ `
       }
       name
       notes
-      image {
-        bucket
-        region
-        key
+      image
+      inspections {
+        items {
+          id
+          date
+          notes
+          image
+          createdAt
+          updatedAt
+          hiveInspectionsId
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -564,7 +561,6 @@ export const deleteHive = /* GraphQL */ `
   ) {
     deleteHive(input: $input, condition: $condition) {
       id
-      apiaryID
       apiary {
         id
         userID
@@ -577,11 +573,7 @@ export const deleteHive = /* GraphQL */ `
         name
         location
         notes
-        image {
-          bucket
-          region
-          key
-        }
+        image
         hives {
           nextToken
         }
@@ -591,14 +583,139 @@ export const deleteHive = /* GraphQL */ `
       }
       name
       notes
-      image {
-        bucket
-        region
-        key
+      image
+      inspections {
+        items {
+          id
+          date
+          notes
+          image
+          createdAt
+          updatedAt
+          hiveInspectionsId
+        }
+        nextToken
       }
       createdAt
       updatedAt
       apiaryHivesId
+    }
+  }
+`;
+export const createInspection = /* GraphQL */ `
+  mutation CreateInspection(
+    $input: CreateInspectionInput!
+    $condition: ModelInspectionConditionInput
+  ) {
+    createInspection(input: $input, condition: $condition) {
+      id
+      hive {
+        id
+        apiary {
+          id
+          userID
+          name
+          location
+          notes
+          image
+          createdAt
+          updatedAt
+          userApiariesId
+        }
+        name
+        notes
+        image
+        inspections {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        apiaryHivesId
+      }
+      date
+      notes
+      image
+      createdAt
+      updatedAt
+      hiveInspectionsId
+    }
+  }
+`;
+export const updateInspection = /* GraphQL */ `
+  mutation UpdateInspection(
+    $input: UpdateInspectionInput!
+    $condition: ModelInspectionConditionInput
+  ) {
+    updateInspection(input: $input, condition: $condition) {
+      id
+      hive {
+        id
+        apiary {
+          id
+          userID
+          name
+          location
+          notes
+          image
+          createdAt
+          updatedAt
+          userApiariesId
+        }
+        name
+        notes
+        image
+        inspections {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        apiaryHivesId
+      }
+      date
+      notes
+      image
+      createdAt
+      updatedAt
+      hiveInspectionsId
+    }
+  }
+`;
+export const deleteInspection = /* GraphQL */ `
+  mutation DeleteInspection(
+    $input: DeleteInspectionInput!
+    $condition: ModelInspectionConditionInput
+  ) {
+    deleteInspection(input: $input, condition: $condition) {
+      id
+      hive {
+        id
+        apiary {
+          id
+          userID
+          name
+          location
+          notes
+          image
+          createdAt
+          updatedAt
+          userApiariesId
+        }
+        name
+        notes
+        image
+        inspections {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        apiaryHivesId
+      }
+      date
+      notes
+      image
+      createdAt
+      updatedAt
+      hiveInspectionsId
     }
   }
 `;

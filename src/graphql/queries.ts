@@ -163,6 +163,7 @@ export const getUser = /* GraphQL */ `
           name
           location
           notes
+          image
           createdAt
           updatedAt
           userApiariesId
@@ -211,17 +212,13 @@ export const getApiary = /* GraphQL */ `
       name
       location
       notes
-      image {
-        bucket
-        region
-        key
-      }
+      image
       hives {
         items {
           id
-          apiaryID
           name
           notes
+          image
           createdAt
           updatedAt
           apiaryHivesId
@@ -253,11 +250,7 @@ export const listApiaries = /* GraphQL */ `
         name
         location
         notes
-        image {
-          bucket
-          region
-          key
-        }
+        image
         hives {
           nextToken
         }
@@ -273,7 +266,6 @@ export const getHive = /* GraphQL */ `
   query GetHive($id: ID!) {
     getHive(id: $id) {
       id
-      apiaryID
       apiary {
         id
         userID
@@ -286,11 +278,7 @@ export const getHive = /* GraphQL */ `
         name
         location
         notes
-        image {
-          bucket
-          region
-          key
-        }
+        image
         hives {
           nextToken
         }
@@ -300,10 +288,18 @@ export const getHive = /* GraphQL */ `
       }
       name
       notes
-      image {
-        bucket
-        region
-        key
+      image
+      inspections {
+        items {
+          id
+          date
+          notes
+          image
+          createdAt
+          updatedAt
+          hiveInspectionsId
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -320,27 +316,91 @@ export const listHives = /* GraphQL */ `
     listHives(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        apiaryID
         apiary {
           id
           userID
           name
           location
           notes
+          image
           createdAt
           updatedAt
           userApiariesId
         }
         name
         notes
-        image {
-          bucket
-          region
-          key
+        image
+        inspections {
+          nextToken
         }
         createdAt
         updatedAt
         apiaryHivesId
+      }
+      nextToken
+    }
+  }
+`;
+export const getInspection = /* GraphQL */ `
+  query GetInspection($id: ID!) {
+    getInspection(id: $id) {
+      id
+      hive {
+        id
+        apiary {
+          id
+          userID
+          name
+          location
+          notes
+          image
+          createdAt
+          updatedAt
+          userApiariesId
+        }
+        name
+        notes
+        image
+        inspections {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        apiaryHivesId
+      }
+      date
+      notes
+      image
+      createdAt
+      updatedAt
+      hiveInspectionsId
+    }
+  }
+`;
+export const listInspections = /* GraphQL */ `
+  query ListInspections(
+    $filter: ModelInspectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listInspections(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        hive {
+          id
+          name
+          notes
+          image
+          createdAt
+          updatedAt
+          apiaryHivesId
+        }
+        date
+        notes
+        image
+        createdAt
+        updatedAt
+        hiveInspectionsId
       }
       nextToken
     }
