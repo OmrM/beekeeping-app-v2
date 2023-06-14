@@ -35,12 +35,12 @@ type Apiary @model {
   location: String
   notes: String
   image: String
-  hives: [Hive] @hasMany
+  hives: [Hive] @hasMany(indexName: "byApiary", fields: ["id"])
 }
 
 type Hive @model {
   id: ID!
-  apiary: Apiary @belongsTo
+  apiaryID: ID! @index(name:"byApiary", sortKeyFields:"name")
   name: String!
   notes: String
   image: String
@@ -54,5 +54,4 @@ type Inspection @model {
   notes: String
   image: String
 }
-
 

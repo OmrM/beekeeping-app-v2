@@ -216,12 +216,12 @@ export const getApiary = /* GraphQL */ `
       hives {
         items {
           id
+          apiaryID
           name
           notes
           image
           createdAt
           updatedAt
-          apiaryHivesId
         }
         nextToken
       }
@@ -266,26 +266,7 @@ export const getHive = /* GraphQL */ `
   query GetHive($id: ID!) {
     getHive(id: $id) {
       id
-      apiary {
-        id
-        userID
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
-        name
-        location
-        notes
-        image
-        hives {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userApiariesId
-      }
+      apiaryID
       name
       notes
       image
@@ -303,7 +284,6 @@ export const getHive = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      apiaryHivesId
     }
   }
 `;
@@ -316,17 +296,7 @@ export const listHives = /* GraphQL */ `
     listHives(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        apiary {
-          id
-          userID
-          name
-          location
-          notes
-          image
-          createdAt
-          updatedAt
-          userApiariesId
-        }
+        apiaryID
         name
         notes
         image
@@ -335,7 +305,6 @@ export const listHives = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        apiaryHivesId
       }
       nextToken
     }
@@ -347,17 +316,7 @@ export const getInspection = /* GraphQL */ `
       id
       hive {
         id
-        apiary {
-          id
-          userID
-          name
-          location
-          notes
-          image
-          createdAt
-          updatedAt
-          userApiariesId
-        }
+        apiaryID
         name
         notes
         image
@@ -366,7 +325,6 @@ export const getInspection = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        apiaryHivesId
       }
       date
       notes
@@ -388,12 +346,12 @@ export const listInspections = /* GraphQL */ `
         id
         hive {
           id
+          apiaryID
           name
           notes
           image
           createdAt
           updatedAt
-          apiaryHivesId
         }
         date
         notes
@@ -401,6 +359,39 @@ export const listInspections = /* GraphQL */ `
         createdAt
         updatedAt
         hiveInspectionsId
+      }
+      nextToken
+    }
+  }
+`;
+export const hivesByApiaryIDAndName = /* GraphQL */ `
+  query HivesByApiaryIDAndName(
+    $apiaryID: ID!
+    $name: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelHiveFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    hivesByApiaryIDAndName(
+      apiaryID: $apiaryID
+      name: $name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        apiaryID
+        name
+        notes
+        image
+        inspections {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       nextToken
     }

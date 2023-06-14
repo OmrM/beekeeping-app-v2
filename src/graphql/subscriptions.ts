@@ -326,12 +326,12 @@ export const onCreateApiary = /* GraphQL */ `
       hives {
         items {
           id
+          apiaryID
           name
           notes
           image
           createdAt
           updatedAt
-          apiaryHivesId
         }
         nextToken
       }
@@ -362,12 +362,12 @@ export const onUpdateApiary = /* GraphQL */ `
       hives {
         items {
           id
+          apiaryID
           name
           notes
           image
           createdAt
           updatedAt
-          apiaryHivesId
         }
         nextToken
       }
@@ -398,12 +398,12 @@ export const onDeleteApiary = /* GraphQL */ `
       hives {
         items {
           id
+          apiaryID
           name
           notes
           image
           createdAt
           updatedAt
-          apiaryHivesId
         }
         nextToken
       }
@@ -417,26 +417,7 @@ export const onCreateHive = /* GraphQL */ `
   subscription OnCreateHive($filter: ModelSubscriptionHiveFilterInput) {
     onCreateHive(filter: $filter) {
       id
-      apiary {
-        id
-        userID
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
-        name
-        location
-        notes
-        image
-        hives {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userApiariesId
-      }
+      apiaryID
       name
       notes
       image
@@ -454,7 +435,6 @@ export const onCreateHive = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      apiaryHivesId
     }
   }
 `;
@@ -462,26 +442,7 @@ export const onUpdateHive = /* GraphQL */ `
   subscription OnUpdateHive($filter: ModelSubscriptionHiveFilterInput) {
     onUpdateHive(filter: $filter) {
       id
-      apiary {
-        id
-        userID
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
-        name
-        location
-        notes
-        image
-        hives {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userApiariesId
-      }
+      apiaryID
       name
       notes
       image
@@ -499,7 +460,6 @@ export const onUpdateHive = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      apiaryHivesId
     }
   }
 `;
@@ -507,26 +467,7 @@ export const onDeleteHive = /* GraphQL */ `
   subscription OnDeleteHive($filter: ModelSubscriptionHiveFilterInput) {
     onDeleteHive(filter: $filter) {
       id
-      apiary {
-        id
-        userID
-        user {
-          id
-          username
-          createdAt
-          updatedAt
-        }
-        name
-        location
-        notes
-        image
-        hives {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userApiariesId
-      }
+      apiaryID
       name
       notes
       image
@@ -544,7 +485,6 @@ export const onDeleteHive = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      apiaryHivesId
     }
   }
 `;
@@ -556,17 +496,7 @@ export const onCreateInspection = /* GraphQL */ `
       id
       hive {
         id
-        apiary {
-          id
-          userID
-          name
-          location
-          notes
-          image
-          createdAt
-          updatedAt
-          userApiariesId
-        }
+        apiaryID
         name
         notes
         image
@@ -575,7 +505,6 @@ export const onCreateInspection = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        apiaryHivesId
       }
       date
       notes
@@ -594,17 +523,7 @@ export const onUpdateInspection = /* GraphQL */ `
       id
       hive {
         id
-        apiary {
-          id
-          userID
-          name
-          location
-          notes
-          image
-          createdAt
-          updatedAt
-          userApiariesId
-        }
+        apiaryID
         name
         notes
         image
@@ -613,7 +532,6 @@ export const onUpdateInspection = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        apiaryHivesId
       }
       date
       notes
@@ -632,17 +550,7 @@ export const onDeleteInspection = /* GraphQL */ `
       id
       hive {
         id
-        apiary {
-          id
-          userID
-          name
-          location
-          notes
-          image
-          createdAt
-          updatedAt
-          userApiariesId
-        }
+        apiaryID
         name
         notes
         image
@@ -651,7 +559,6 @@ export const onDeleteInspection = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        apiaryHivesId
       }
       date
       notes
