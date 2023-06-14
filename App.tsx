@@ -2,11 +2,13 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { useState } from 'react';
 import { StatusBar } from 'react-native';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { Amplify, API, graphqlOperation } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
-import { Storage } from 'aws-amplify';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']); // Ignore log notification by message
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 Amplify.configure({
   ...awsconfig,
   Storage: {
