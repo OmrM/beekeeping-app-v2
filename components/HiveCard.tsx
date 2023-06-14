@@ -12,7 +12,7 @@ export interface Hive {
     name: string;
     bees: number;
     health: string;
-    imageUrl: string;
+    image: string;
     notes: string;
 }
 
@@ -25,7 +25,7 @@ const HiveCard = ({ item, onPress }: HiveCardProps) => {
         <TouchableOpacity onPress={onPress}>
             <CardContainer>
                 {/* Render image if it exits, else render the default icon */}
-                {item.imageUrl !== '' ? (
+                {item.image !== null ? (
                     <Image
                         source={{ uri: item.imageUrl }}
                         style={{ width: 30, height: 30, borderRadius: 25}}
