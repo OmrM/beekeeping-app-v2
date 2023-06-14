@@ -1,60 +1,82 @@
 import React, { useState } from 'react';
-import { TextInput } from 'react-native-paper';
-import { Image, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Container, InputContainer, StyledText } from './styles/Screens.styles';
+import { InputContainer, StyledScrollView } from './styles/Screens.styles';
 import StyledButton from '../components/StyledButton';
 import * as ImagePicker from 'expo-image-picker';
-import { TouchableOpacity } from 'react-native';
-import { CreateApiaryInput, CreateApiaryMutation, S3ObjectInput } from '../src/API';
+import { CreateApiaryInput, CreateApiaryMutation } from '../src/API';
 import { createApiary } from '../src/graphql/mutations';
 import { API, GraphQLQuery } from '@aws-amplify/api';
 import { Storage } from '@aws-amplify/storage';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import FormImage from '../components/FormImage';
+import StyledInput from '../components/StyledInput';
 
 const NewApiaryScreen = ({ navigation }) => {
 
-    const [name, setName] = useState('');
-    const [location, setLocation] = useState('');
-    const [notes, setNotes] = useState('');
-    const [image, setImage] = useState<string | null | S3ObjectInput>(null);
+    const initialFormState = { name: '', location: '', notes: '', image: '' }
+    const initialImageState = { imageURI: '' }
 
+    const [formState, setFormState] = useState(initialFormState);
+    const [imageState, setImageState] = useState(initialImageState);
+
+    //state updater functions - good to have when updating multiple fields of the state object
+    function updateFormState(key: any, value: any) {
+        setFormState({ ...formState, [key]: value });
+    }
+    function updateImageState(key: any, value: any) {
+        setImageState({ ...imageState, [key]: value });
+    }
+
+    /* pickImage function updates: 
+        imageState: holds the URI of the image, which points to the image file
+        formState.image: holds the image file name, will be saved to s3 with this name
+    */
     const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
-        console.log(result);
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+            if (!result.canceled) {
+                console.log('uri' + result);
+                updateImageState('imageURI', result.assets[0].uri);
+                const fileName = 'Apiary_Photo_' + uuidv4();
+                updateFormState('image', fileName);
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
-
     const submitApiary = async () => {
-        // Submit the new apiary details
-        const apiaryDetails: CreateApiaryInput = {
-            name: name,
-            location: location,
-            notes: notes,
-            image: image,
+        // Upload image
+        if (imageState.imageURI) {
+            try {
+                const photo = await fetch(imageState.imageURI);
+                const photoBlob = await photo.blob();//photo blob to be uploaded
+                const key = formState.image; //image file name
+                await Storage.put(key, photoBlob, {
+                    contentType: 'image/jpeg'
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        // TODO: figure out how to get the current username here:
+        // TODO: figure out how to properly set the type for s3 object
+        let apiaryDetails: CreateApiaryInput = {
+            name: formState.name,
+            location: formState.location,
+            notes: formState.notes,
             userID: 'testUser'
         }
-        
-
-        if (image) {
-            const response = await fetch(image);
-            const blob = await response.blob();
-            const key = uuidv4();
-            await Storage.put(key, blob, {
-                contentType: 'image/jpeg' // contentType is optional
-            });
-            apiaryDetails.image.key=key
-
+        if (formState.image) {
+            apiaryDetails = { ...apiaryDetails, image: formState.image };
         }
-        const newApiary = await API.graphql<GraphQLQuery<CreateApiaryMutation>>({
+        await API.graphql<GraphQLQuery<CreateApiaryMutation>>({
             query: createApiary,
             variables: { input: apiaryDetails }
         })
@@ -62,57 +84,43 @@ const NewApiaryScreen = ({ navigation }) => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}
-            accessible={false}>
-            <Container>
+        <StyledScrollView>
+            <StyledInput 
+                label="name"
+                value={formState.name}
+                onChangeText={val => updateFormState('name', val)}
+                multiline={false}
+            />
+            <StyledInput
+                label="Location"
+                value={formState.location}
+                onChangeText={val => updateFormState('location', val)}
+                multiline={false}
+            />
+            <StyledInput
+                label="Notes"
+                value={formState.notes}
+                onChangeText={val => updateFormState('notes', val)}
+                multiline={true}
+            />
 
-                <InputContainer>
-                    <TextInput
-                        label="Name"
-                        value={name}
-                        onChangeText={setName}
-                    />
-                </InputContainer>
+            <InputContainer>
+                <StyledButton icon="camera" onPress={pickImage}>
+                    Pick an Image
+                </StyledButton>
+                {
+                    imageState.imageURI &&
+                    <FormImage imageURI={imageState.imageURI} onPress={() => { updateImageState('imageURI', null) }} />
+                }
+            </InputContainer>
 
-                <InputContainer>
-                    <TextInput
-                        label="Location"
-                        value={location}
-                        onChangeText={setLocation}
-                    />
-                </InputContainer>
+            <InputContainer>
+                <StyledButton onPress={submitApiary}>
+                    Submit
+                </StyledButton>
+            </InputContainer>
 
-                <InputContainer>
-                    <TextInput
-                        label="Notes"
-                        value={notes}
-                        onChangeText={setNotes}
-                    />
-                </InputContainer>
-
-                <InputContainer>
-                    <StyledButton icon="camera" onPress={pickImage}>
-                        Pick an Image
-                    </StyledButton>
-                    {
-
-                        image &&
-                        <TouchableOpacity onPress={() => { setImage(null) }} style={{ overflow: 'hidden' }}>
-                            <Image
-                                source={{ uri: image }}
-                                style={{ width: 200, height: 200, alignSelf: 'center', margin: 20, borderRadius: 5, }} />
-                        </TouchableOpacity>
-                    }
-                </InputContainer>
-
-                <InputContainer>
-                    <StyledButton mode="contained" onPress={submitApiary}>
-                        Submit
-                    </StyledButton>
-                </InputContainer>
-
-            </Container>
-        </TouchableWithoutFeedback>
+        </StyledScrollView>
     );
 };
 
