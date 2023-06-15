@@ -424,12 +424,12 @@ export const onCreateHive = /* GraphQL */ `
       inspections {
         items {
           id
+          hiveID
           date
           notes
           image
           createdAt
           updatedAt
-          hiveInspectionsId
         }
         nextToken
       }
@@ -449,12 +449,12 @@ export const onUpdateHive = /* GraphQL */ `
       inspections {
         items {
           id
+          hiveID
           date
           notes
           image
           createdAt
           updatedAt
-          hiveInspectionsId
         }
         nextToken
       }
@@ -474,12 +474,12 @@ export const onDeleteHive = /* GraphQL */ `
       inspections {
         items {
           id
+          hiveID
           date
           notes
           image
           createdAt
           updatedAt
-          hiveInspectionsId
         }
         nextToken
       }
@@ -494,24 +494,12 @@ export const onCreateInspection = /* GraphQL */ `
   ) {
     onCreateInspection(filter: $filter) {
       id
-      hive {
-        id
-        apiaryID
-        name
-        notes
-        image
-        inspections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      hiveID
       date
       notes
       image
       createdAt
       updatedAt
-      hiveInspectionsId
     }
   }
 `;
@@ -521,24 +509,12 @@ export const onUpdateInspection = /* GraphQL */ `
   ) {
     onUpdateInspection(filter: $filter) {
       id
-      hive {
-        id
-        apiaryID
-        name
-        notes
-        image
-        inspections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      hiveID
       date
       notes
       image
       createdAt
       updatedAt
-      hiveInspectionsId
     }
   }
 `;
@@ -548,24 +524,12 @@ export const onDeleteInspection = /* GraphQL */ `
   ) {
     onDeleteInspection(filter: $filter) {
       id
-      hive {
-        id
-        apiaryID
-        name
-        notes
-        image
-        inspections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      hiveID
       date
       notes
       image
       createdAt
       updatedAt
-      hiveInspectionsId
     }
   }
 `;

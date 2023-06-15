@@ -472,12 +472,12 @@ export const createHive = /* GraphQL */ `
       inspections {
         items {
           id
+          hiveID
           date
           notes
           image
           createdAt
           updatedAt
-          hiveInspectionsId
         }
         nextToken
       }
@@ -500,12 +500,12 @@ export const updateHive = /* GraphQL */ `
       inspections {
         items {
           id
+          hiveID
           date
           notes
           image
           createdAt
           updatedAt
-          hiveInspectionsId
         }
         nextToken
       }
@@ -528,12 +528,12 @@ export const deleteHive = /* GraphQL */ `
       inspections {
         items {
           id
+          hiveID
           date
           notes
           image
           createdAt
           updatedAt
-          hiveInspectionsId
         }
         nextToken
       }
@@ -549,24 +549,12 @@ export const createInspection = /* GraphQL */ `
   ) {
     createInspection(input: $input, condition: $condition) {
       id
-      hive {
-        id
-        apiaryID
-        name
-        notes
-        image
-        inspections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      hiveID
       date
       notes
       image
       createdAt
       updatedAt
-      hiveInspectionsId
     }
   }
 `;
@@ -577,24 +565,12 @@ export const updateInspection = /* GraphQL */ `
   ) {
     updateInspection(input: $input, condition: $condition) {
       id
-      hive {
-        id
-        apiaryID
-        name
-        notes
-        image
-        inspections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      hiveID
       date
       notes
       image
       createdAt
       updatedAt
-      hiveInspectionsId
     }
   }
 `;
@@ -605,24 +581,12 @@ export const deleteInspection = /* GraphQL */ `
   ) {
     deleteInspection(input: $input, condition: $condition) {
       id
-      hive {
-        id
-        apiaryID
-        name
-        notes
-        image
-        inspections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      hiveID
       date
       notes
       image
       createdAt
       updatedAt
-      hiveInspectionsId
     }
   }
 `;

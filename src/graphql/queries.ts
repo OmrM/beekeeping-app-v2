@@ -273,12 +273,12 @@ export const getHive = /* GraphQL */ `
       inspections {
         items {
           id
+          hiveID
           date
           notes
           image
           createdAt
           updatedAt
-          hiveInspectionsId
         }
         nextToken
       }
@@ -314,24 +314,12 @@ export const getInspection = /* GraphQL */ `
   query GetInspection($id: ID!) {
     getInspection(id: $id) {
       id
-      hive {
-        id
-        apiaryID
-        name
-        notes
-        image
-        inspections {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      hiveID
       date
       notes
       image
       createdAt
       updatedAt
-      hiveInspectionsId
     }
   }
 `;
@@ -344,21 +332,12 @@ export const listInspections = /* GraphQL */ `
     listInspections(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        hive {
-          id
-          apiaryID
-          name
-          notes
-          image
-          createdAt
-          updatedAt
-        }
+        hiveID
         date
         notes
         image
         createdAt
         updatedAt
-        hiveInspectionsId
       }
       nextToken
     }
@@ -390,6 +369,36 @@ export const hivesByApiaryIDAndName = /* GraphQL */ `
         inspections {
           nextToken
         }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const inspectionsByHiveIDAndDate = /* GraphQL */ `
+  query InspectionsByHiveIDAndDate(
+    $hiveID: ID!
+    $date: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelInspectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    inspectionsByHiveIDAndDate(
+      hiveID: $hiveID
+      date: $date
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        hiveID
+        date
+        notes
+        image
         createdAt
         updatedAt
       }

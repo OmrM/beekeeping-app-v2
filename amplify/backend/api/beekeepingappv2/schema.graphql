@@ -44,13 +44,13 @@ type Hive @model {
   name: String!
   notes: String
   image: String
-  inspections: [Inspection] @hasMany
+  inspections: [Inspection] @hasMany(indexName: "byHive", fields: ["id"])
 }
 
 type Inspection @model {
   id: ID!
-  hive: Hive @belongsTo
-  date: String!
+  hiveID: ID! @index(name:"byHive", sortKeyFields:"date")
+  date: String
   notes: String
   image: String
 }
