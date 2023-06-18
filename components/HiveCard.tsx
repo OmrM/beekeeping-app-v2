@@ -22,6 +22,7 @@ interface HiveCardProps {
     onPress: () => void;
 }
 const HiveCard = ({ item, onPress }: HiveCardProps) => {
+    const formattedDate = new Date(item.lastInspectionDate).toLocaleDateString();
     return (
         <TouchableOpacity onPress={onPress}>
             <CardContainer>
@@ -39,7 +40,7 @@ const HiveCard = ({ item, onPress }: HiveCardProps) => {
                     <CardText>Bees: {item.bees}</CardText>
                     <CardText>Health: {item.health}</CardText>
                     <CardText>Notes: {item.notes}</CardText>
-                    <CardText>Last Inspection: {item.lastInspectionDate} </CardText>
+                    <CardText>Last Inspection: {formattedDate} </CardText>
                 </CardTextContainer>
             </CardContainer>
         </TouchableOpacity>
