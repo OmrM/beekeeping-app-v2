@@ -330,6 +330,8 @@ export const onCreateApiary = /* GraphQL */ `
           name
           notes
           image
+          lastInspectionID
+          lastInspectionDate
           createdAt
           updatedAt
         }
@@ -366,6 +368,8 @@ export const onUpdateApiary = /* GraphQL */ `
           name
           notes
           image
+          lastInspectionID
+          lastInspectionDate
           createdAt
           updatedAt
         }
@@ -402,6 +406,8 @@ export const onDeleteApiary = /* GraphQL */ `
           name
           notes
           image
+          lastInspectionID
+          lastInspectionDate
           createdAt
           updatedAt
         }
@@ -433,6 +439,8 @@ export const onCreateHive = /* GraphQL */ `
         }
         nextToken
       }
+      lastInspectionID
+      lastInspectionDate
       createdAt
       updatedAt
     }
@@ -458,6 +466,8 @@ export const onUpdateHive = /* GraphQL */ `
         }
         nextToken
       }
+      lastInspectionID
+      lastInspectionDate
       createdAt
       updatedAt
     }
@@ -483,6 +493,8 @@ export const onDeleteHive = /* GraphQL */ `
         }
         nextToken
       }
+      lastInspectionID
+      lastInspectionDate
       createdAt
       updatedAt
     }

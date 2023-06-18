@@ -14,6 +14,7 @@ export interface Hive {
     health: string;
     image: string;
     notes: string;
+    lastInspectionDate: string;
 }
 
 interface HiveCardProps {
@@ -38,6 +39,7 @@ const HiveCard = ({ item, onPress }: HiveCardProps) => {
                     <CardText>Bees: {item.bees}</CardText>
                     <CardText>Health: {item.health}</CardText>
                     <CardText>Notes: {item.notes}</CardText>
+                    <CardText>Last Inspection: {item.lastInspectionDate} </CardText>
                 </CardTextContainer>
             </CardContainer>
         </TouchableOpacity>

@@ -220,6 +220,8 @@ export const getApiary = /* GraphQL */ `
           name
           notes
           image
+          lastInspectionID
+          lastInspectionDate
           createdAt
           updatedAt
         }
@@ -282,6 +284,8 @@ export const getHive = /* GraphQL */ `
         }
         nextToken
       }
+      lastInspectionID
+      lastInspectionDate
       createdAt
       updatedAt
     }
@@ -303,6 +307,8 @@ export const listHives = /* GraphQL */ `
         inspections {
           nextToken
         }
+        lastInspectionID
+        lastInspectionDate
         createdAt
         updatedAt
       }
@@ -369,6 +375,8 @@ export const hivesByApiaryIDAndName = /* GraphQL */ `
         inspections {
           nextToken
         }
+        lastInspectionID
+        lastInspectionDate
         createdAt
         updatedAt
       }

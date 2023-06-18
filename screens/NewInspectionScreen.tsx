@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Container, InputContainer, ScreenText, StyledScrollView, StyledText } from './styles/Screens.styles';
 import StyledButton from '../components/StyledButton';
 import * as ImagePicker from 'expo-image-picker';
-import { Apiary, CreateApiaryInput, CreateApiaryMutation, CreateHiveInput, CreateHiveMutation, CreateInspectionInput, CreateInspectionMutation, ListApiariesQuery } from '../src/API';
-import { createHive, createInspection } from '../src/graphql/mutations';
+import { Apiary, CreateApiaryInput, CreateApiaryMutation, CreateHiveInput, CreateHiveMutation, CreateInspectionInput, CreateInspectionMutation, ListApiariesQuery, UpdateHiveMutation } from '../src/API';
+import { createHive, createInspection, updateHive } from '../src/graphql/mutations';
 import { API, GraphQLQuery } from '@aws-amplify/api';
 import { Storage } from '@aws-amplify/storage';
 import 'react-native-get-random-values';
@@ -14,7 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { ScreenHeading } from './styles/Screens.styles';
 import { View } from 'react-native';
 
-const NewInspectionScreen = ({navigation, route}) => {
+const NewInspectionScreen = ({ navigation, route }) => {
     const initialFormState = { date: '', hiveID: '', notes: '', image: '', }
     const initialImageState = { imageURI: '' };
     const [date, setDate] = useState(new Date());
@@ -82,12 +82,23 @@ const NewInspectionScreen = ({navigation, route}) => {
         }
         //make sure to get the current date into the inspection details to be submitted: 
         inspectionDetails.date = date.toISOString();
-        console.log(JSON.stringify(inspectionDetails));
-        //submit to db: 
-        await API.graphql<GraphQLQuery<CreateInspectionMutation>>({
-            query: createInspection,
-            variables: { input: inspectionDetails }
-        });
+        try {
+            //submit to db: 
+            const newInspection = await API.graphql<GraphQLQuery<CreateInspectionMutation>>({
+                query: createInspection,
+                variables: { input: inspectionDetails }
+            });
+            var resultId = newInspection.data?.createInspection?.id
+            console.log("inspection id to save in hive: ", JSON.stringify(resultId));
+            // update the hive's lastInspection field with the new inspection
+            await API.graphql<GraphQLQuery<UpdateHiveMutation>>({
+                query: updateHive,
+                variables: { input: { id: currentHiveID, lastInspectionID: resultId,lastInspectionDate:inspectionDetails.date } },
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
         navigation.goBack();
     };
 

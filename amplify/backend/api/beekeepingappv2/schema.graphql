@@ -45,6 +45,8 @@ type Hive @model {
   notes: String
   image: String
   inspections: [Inspection] @hasMany(indexName: "byHive", fields: ["id"])
+  lastInspectionID: String
+  lastInspectionDate: String
 }
 
 type Inspection @model {
