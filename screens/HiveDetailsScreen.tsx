@@ -52,7 +52,8 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
 
 
   useEffect(() => {
-    isFocused && fetchHive() && fetchInspections();
+    isFocused && fetchInspections();
+    fetchHive()
   }, [isFocused]);
 
   const fetchHive = async () => {
