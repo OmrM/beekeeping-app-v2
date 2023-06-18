@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { StyledText, Container, ScreenHeading } from './styles/Screens.styles';
 import { API } from 'aws-amplify';
 import { GraphQLQuery } from '@aws-amplify/api';
-import { GetHiveQuery, ListInspectionsQuery } from '../src/API';
-import { getHive, listInspections } from '../src/graphql/queries';
+import { GetHiveQuery, InspectionsByHiveIDAndDateQuery, ListInspectionsQuery } from '../src/API';
+import { getHive, inspectionsByHiveIDAndDate, listInspections } from '../src/graphql/queries';
 import HiveCard from '../components/HiveCard';
 import ActionButton from '../components/ActionButton';
 import InspectionCard from '../components/InspectionCard';
@@ -76,12 +76,13 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
 
   const fetchInspections = async () => {
     let selectedhive = route.params.id;
-    console.log("hive", selectedhive);
-    let inspectionsData = await API.graphql<GraphQLQuery<ListInspectionsQuery>>({
-      query: listInspections,
-      variables: {hiveID:selectedhive}
+    //console.log("hive", selectedhive);
+    let inspectionsData = await API.graphql<GraphQLQuery<InspectionsByHiveIDAndDateQuery>>({
+      query: inspectionsByHiveIDAndDate,
+      variables: {hiveID:selectedhive, sortDirection: "DESC"}
+      
     });
-    let inspectionsDataItems = inspectionsData.data?.listInspections?.items ?? [];
+    let inspectionsDataItems = inspectionsData.data?.inspectionsByHiveIDAndDate?.items ?? [];
     setInspections(inspectionsDataItems);
     console.log("inspections for hive: ", JSON.stringify(inspectionsData));
   }
