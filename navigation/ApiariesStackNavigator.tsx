@@ -5,13 +5,14 @@ import { lightTheme } from "../themes/themes";
 import { useContext } from "react";
 import AddNewApiary from "../screens/NewApiaryScreen";
 import NewApiaryScreen from "../screens/NewApiaryScreen";
+import { Button } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 
 
 //const ApiariesStackNavigator: React.FC<Props> = ({toggleTheme}) => {
-const ApiariesStackNavigator = ({ toggleTheme }: Props) => {
+const ApiariesStackNavigator = ({ toggleTheme, navigation}: Props) => {
     const theme = useContext(ThemeContext) || lightTheme;
     return (
         <Stack.Navigator
@@ -28,10 +29,12 @@ const ApiariesStackNavigator = ({ toggleTheme }: Props) => {
                 {props => <ApiariesScreen {...props} toggleTheme={toggleTheme} />}
             </Stack.Screen>
             <Stack.Screen name="New Apiary"
-                options={{
+                options ={ ({navigation}) => ({
                     presentation: 'modal',
-                    headerBackTitle: 'cancel',
-                }}
+                    headerLeft: () => (
+                        <Button title="Cancel" onPress={() => navigation.goBack()} />
+                    ),
+                })}
             >
                 {props => <NewApiaryScreen{...props} toggleTheme={toggleTheme}/>}
             </Stack.Screen>
