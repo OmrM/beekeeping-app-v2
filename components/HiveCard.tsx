@@ -27,7 +27,7 @@ const HiveCard = ({ item, onPress }: HiveCardProps) => {
                 {/* Render image if it exits, else render the default icon */}
                 {item.image !== null ? (
                     <Image
-                        source={{ uri: item.imageUrl }}
+                        source={{ uri: item.image }}
                         style={{ width: 30, height: 30, borderRadius: 25}}
                     />
                 ) : (
@@ -35,9 +35,9 @@ const HiveCard = ({ item, onPress }: HiveCardProps) => {
                 )}
                 <CardTextContainer>
                     <CardTitle>{item.name}</CardTitle>
-                    <CardText>{item.bees}</CardText>
-                    <CardText>{item.health}</CardText>
-                    <CardText>{item.notes}</CardText>
+                    <CardText>Bees: {item.bees}</CardText>
+                    <CardText>Health: {item.health}</CardText>
+                    <CardText>Notes: {item.notes}</CardText>
                 </CardTextContainer>
             </CardContainer>
         </TouchableOpacity>
