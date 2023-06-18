@@ -54,6 +54,7 @@ const HivesScreen = ({ navigation }: any) => {
   /* custom render function for the HiveCard */
   const renderHiveCard = ({ item }: { item: Hive }) => {
     const handleHiveCardPress = () => {
+      // navigating to details screen and passing hive id
       navigation.navigate('Hive Details', { id: item.id });
     }
     return <HiveCard item={item} onPress={handleHiveCardPress} />;
