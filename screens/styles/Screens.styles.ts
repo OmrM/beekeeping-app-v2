@@ -33,6 +33,14 @@ export const CardContainer = styled.Pressable`
     elevation: 3;
 `;
 
+export const ScreenHeading = styled.Text`
+    padding-horizontal: 20px;
+    padding-top: 10px;
+    font-size: ${({ theme }) => theme.cardTitle.fontSize};
+    font-weight:  ${({ theme }) => theme.cardTitle.fontWeight};
+    color:  ${({ theme }) => theme.textColor}
+`;
+
 export const CardTitle = styled.Text`
     font-size: ${({ theme }) => theme.cardTitle.fontSize};
     font-weight:  ${({ theme }) => theme.cardTitle.fontWeight};
@@ -41,13 +49,18 @@ export const CardTitle = styled.Text`
 export const CardText = styled.Text`
     font-size: ${({ theme }) => theme.cardText.fontSize};
     font-weight:  ${({ theme }) => theme.cardText.fontWeight};
-    color: ${ ({theme}) => theme.textColor};
+    color: ${({ theme }) => theme.textColor};
+`;
+export const ScreenText = styled.Text`
+    padding-horizontal: 20px;
+    padding-top: 10px;
+    font-size: ${({theme}) => theme.cardText.fontSize};
 `;
 
 export const InputContainer = styled.View`
     margin: 20px 20px 0px 20px;
 `;
-//if I wanted to use the theming inline in a component: 
+//if I wanted to use the theming inline in a component:
 /* const SettingsScreen = ({toggleTheme}) => {
 
     return (
