@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyledText, Container, CardContainer, CardText, CardTitle } from './styles/Screens.styles';
+import { StyledText, Container } from './styles/Screens.styles';
+import { API } from 'aws-amplify';
+import { GraphQLQuery } from '@aws-amplify/api';
+import { GetHiveQuery } from '../src/API';
+import { getHive } from '../src/graphql/queries';
+import HiveCard from '../components/HiveCard';
+import ActionButton from '../components/ActionButton';
 
 interface Hive {
   id: string;
@@ -7,23 +13,23 @@ interface Hive {
   type: 'Langstroth' | 'Top-bar' | 'Warre';
   strength: string;
   lastInspection: {
-    date: string;
+    date: string | undefined;
     notes: string;
   };
   queenStatus: string;
-  activities: Array<{ 
-    activity: string; 
-    date: string; 
+  activities: Array<{
+    activity: string;
+    date: | undefined;
   }>;
-  harvests: Array<{ 
-    date: string; 
-    quantity: number; 
-    quality: string; 
+  harvests: Array<{
+    date: string;
+    quantity: number;
+    quality: string;
   }>;
-  treatments: Array<{ 
-    date: string; 
-    medication: string; 
-    dosage: string; 
+  treatments: Array<{
+    date: string | undefined;
+    medication: string;
+    dosage: string;
   }>;
 };
 
@@ -39,71 +45,67 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
   const [hiveDetails, setHiveDetails] = useState<Hive | null>(null);
 
   useEffect(() => {
-/*     const fetchedHiveDetails: Hive = {
-      // ... Fetch from API based on `id`
-    }; */
-    
-    const fetchedHiveDetails: Hive = {
-        id: "1",
-        name: "Hive 1",
-        type: "Langstroth",
-        strength: "Strong",
-        lastInspection: {
-          date: "2023-05-18",
-          notes: "Good honey production, no visible pests or diseases.",
-        },
-        queenStatus: "Present",
-        activities: [
-          {
-            activity: "Feeding",
-            date: "2023-05-17",
-          },
-          {
-            activity: "Splitting",
-            date: "2023-05-10",
-          },
-        ],
-        harvests: [
-          {
-            date: "2023-05-15",
-            quantity: 10, // lbs
-            quality: "Excellent",
-          },
-          {
-            date: "2023-04-15",
-            quantity: 8, // lbs
-            quality: "Good",
-          },
-        ],
-        treatments: [
-          {
-            date: "2023-05-01",
-            medication: "Mite treatment",
-            dosage: "Standard",
-          },
-        ],
-      };
-      
-    setHiveDetails(fetchedHiveDetails);
+    //console.log(JSON.stringify(hiveData.));
+    //setHiveDetails(hiveData);
+    //setHiveDetails(fetchedHiveDetails)
+    fetchHive();
   }, [route.params.id]);
 
-  if (!hiveDetails) {
-    return <StyledText>Loading...</StyledText>;
-  }
 
+  const fetchHive = async () => {
+    try {
+      console.log("FETCHING SINGLE HIVE")
+      let hiveData = await API.graphql<GraphQLQuery<GetHiveQuery>>({
+        query: getHive,
+        variables: { id: "1d1fe882-ed51-4d39-8136-06cf8f13e9a8" }
+      })
+      let hiveDataItem = hiveData.data?.getHive;
+      console.log(JSON.stringify(hiveDataItem));
+      setHiveDetails(hiveDataItem);
+    } catch (error) {
+      console.log("Error fetching hive: ", error);
+    }
+  };
+
+
+
+
+  const handleActionBttnPress = () => {
+    navigation.navigate("New Inspection")
+  }
+  if (!hiveDetails) {
+    return (
+    <Container><StyledText>Loading...</StyledText></Container>
+    
+    );
+  }
   return (
+    
     <Container>
-      <CardContainer>
-        <CardTitle>{hiveDetails.name}</CardTitle>
-        <CardText>Type: {hiveDetails.type}</CardText>
-        <CardText>Strength: {hiveDetails.strength}</CardText>
-        <CardText>Last Inspection: {hiveDetails.lastInspection.date}</CardText>
-        <CardText>Inspection Notes: {hiveDetails.lastInspection.notes}</CardText>
-        <CardText>Queen Status: {hiveDetails.queenStatus}</CardText>
-        {/* Iterate over activities, harvests, treatments arrays to display each item */}
-      </CardContainer>
+      <StyledText style={{paddingLeft:20}}>Summary:</StyledText>
+      <HiveCard item={hiveDetails}/>
+      <StyledText style={{paddingLeft:20}}>Inspections:</StyledText>
+      <ActionButton onPress={handleActionBttnPress}/>
     </Container>
   );
 };
 
 export default HiveDetailsScreen;
+
+
+
+
+
+
+
+
+/* 
+<CardContainer>
+<CardTitle>{hiveDetails.name}</CardTitle>
+<CardText>Type: {hiveDetails.type}</CardText>
+<CardText>Strength: {hiveDetails.strength}</CardText>
+<CardText>Last Inspection: {hiveDetails.lastInspection.date}</CardText>
+<CardText>Inspection Notes: {hiveDetails.lastInspection.notes}</CardText>
+<CardText>Queen Status: {hiveDetails.queenStatus}</CardText>
+{/* Iterate over activities, harvests, treatments arrays to display each item 
+*/

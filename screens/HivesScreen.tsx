@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, Pressable, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyledText, Container, CardContainer, CardText, CardTitle } from './styles/Screens.styles';
+import { FlatList } from 'react-native';
+import { Container } from './styles/Screens.styles';
 import ActionButton from '../components/ActionButton';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { RefreshControl } from 'react-native-gesture-handler';
 import HiveCard, { Hive } from '../components/HiveCard';
-import { ListApiariesQuery, ListHivesQuery } from '../src/API';
+import { ListHivesQuery } from '../src/API';
 import { GraphQLQuery } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 import { listHives } from '../src/graphql/queries';
@@ -65,6 +64,7 @@ const HivesScreen = ({ navigation }: any) => {
         data={hives}
         renderItem={renderHiveCard}
         keyExtractor={item => item.id}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
       <ActionButton onPress={handleActionBttnPress} />
     </Container>
