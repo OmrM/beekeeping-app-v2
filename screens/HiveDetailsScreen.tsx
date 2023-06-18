@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { StyledText, Container } from './styles/Screens.styles';
+import { StyledText, Container, ScreenHeading } from './styles/Screens.styles';
 import { API } from 'aws-amplify';
 import { GraphQLQuery } from '@aws-amplify/api';
-import { GetHiveQuery } from '../src/API';
-import { getHive } from '../src/graphql/queries';
+import { GetHiveQuery, ListInspectionsQuery } from '../src/API';
+import { getHive, listInspections } from '../src/graphql/queries';
 import HiveCard from '../components/HiveCard';
 import ActionButton from '../components/ActionButton';
-
+import InspectionCard from '../components/InspectionCard';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { FlatList } from 'react-native-gesture-handler';
+import { useIsFocused } from '@react-navigation/native';
 interface Hive {
+  inspections: any;
   id: string;
   name: string;
   type: 'Langstroth' | 'Top-bar' | 'Warre';
@@ -42,50 +46,77 @@ interface HiveDetailProps {
 };
 
 const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
+  const isFocused = useIsFocused();
   const [hiveDetails, setHiveDetails] = useState<Hive | null>(null);
+  const [inspections, setInspections] = useState([]);
+
 
   useEffect(() => {
-    //console.log(JSON.stringify(hiveData.));
-    //setHiveDetails(hiveData);
-    //setHiveDetails(fetchedHiveDetails)
-    fetchHive();
-  }, [route.params.id]);
-
+    isFocused && fetchHive() && fetchInspections();
+  }, [isFocused]);
 
   const fetchHive = async () => {
     try {
       console.log("FETCHING SINGLE HIVE")
+      let selectedHiveId = route.params.id;
       let hiveData = await API.graphql<GraphQLQuery<GetHiveQuery>>({
         query: getHive,
-        variables: { id: "1d1fe882-ed51-4d39-8136-06cf8f13e9a8" }
+        variables: { id: selectedHiveId }
       })
       let hiveDataItem = hiveData.data?.getHive;
-      console.log(JSON.stringify(hiveDataItem));
+      //console.log(JSON.stringify(hiveDataItem));
+      //let inspectionsData = hiveDataItem?.inspections;
+      //setInspections(inspectionsData?.items);
       setHiveDetails(hiveDataItem);
+      //console.log("Inspections for this hive: ", inspectionsData);
     } catch (error) {
       console.log("Error fetching hive: ", error);
     }
   };
 
-
-
-
+  const fetchInspections = async () => {
+    let selectedhive = route.params.id;
+    console.log("hive", selectedhive);
+    let inspectionsData = await API.graphql<GraphQLQuery<ListInspectionsQuery>>({
+      query: listInspections,
+      variables: {hiveID:selectedhive}
+    });
+    let inspectionsDataItems = inspectionsData.data?.listInspections?.items ?? [];
+    setInspections(inspectionsDataItems);
+    console.log("inspections for hive: ", JSON.stringify(inspectionsData));
+  }
   const handleActionBttnPress = () => {
-    navigation.navigate("New Inspection")
+    //pass hiveID to new inspection screen. 
+    let currentHiveID = route.params.id;
+    console.log(currentHiveID);
+    navigation.navigate("New Inspection", currentHiveID);
   }
   if (!hiveDetails) {
     return (
-    <Container><StyledText>Loading...</StyledText></Container>
-    
+      <Container><StyledText>Loading...</StyledText></Container>
     );
   }
+  //custom render function for card flatlist: 
+  const renderInspectionCard = ({item}) => {
+    const handleInspctCardPress = () => {
+      //navigate to screen with more details for this inspection record
+      console.log("Pressed inspection");
+    }
+    return <InspectionCard item={item} onPress={handleInspctCardPress}/>
+  }
   return (
-    
+
     <Container>
-      <StyledText style={{paddingLeft:20}}>Summary:</StyledText>
-      <HiveCard item={hiveDetails}/>
-      <StyledText style={{paddingLeft:20}}>Inspections:</StyledText>
-      <ActionButton onPress={handleActionBttnPress}/>
+      <ScreenHeading>Summary</ScreenHeading>
+      <HiveCard item={hiveDetails} />
+      <ScreenHeading>Inspections</ScreenHeading>
+      {/* Insert Inspection Card here */}
+      <FlatList
+        data={inspections}
+        renderItem={renderInspectionCard}
+        keyExtractor={item => item.id}
+      />
+      <ActionButton onPress={handleActionBttnPress} />
     </Container>
   );
 };
