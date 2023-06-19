@@ -10,6 +10,7 @@ import InspectionCard from '../components/InspectionCard';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { FlatList } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
+import { View } from 'react-native';
 interface Hive {
   inspections: any;
   id: string;
@@ -82,8 +83,8 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
     //console.log("hive", selectedhive);
     let inspectionsData = await API.graphql<GraphQLQuery<InspectionsByHiveIDAndDateQuery>>({
       query: inspectionsByHiveIDAndDate,
-      variables: {hiveID:selectedhive, sortDirection: "DESC"}
-      
+      variables: { hiveID: selectedhive, sortDirection: "DESC" }
+
     });
     let inspectionsDataItems = inspectionsData.data?.inspectionsByHiveIDAndDate?.items ?? [];
     setInspections(inspectionsDataItems);
@@ -101,19 +102,20 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
     );
   }
   //custom render function for card flatlist: 
-  const renderInspectionCard = ({item}) => {
+  const renderInspectionCard = ({ item }) => {
     const handleInspctCardPress = () => {
       //navigate to screen with more details for this inspection record
       console.log("Pressed inspection");
     }
-    return <InspectionCard item={item} onPress={handleInspctCardPress}/>
+    return <InspectionCard item={item} onPress={handleInspctCardPress} />
   }
   return (
 
     <Container>
-      <ScreenHeading>Summary</ScreenHeading>
-      <HiveCard item={hiveDetails} />
-      <ScreenHeading>Inspections</ScreenHeading>
+        <ScreenHeading>Summary</ScreenHeading>
+        <HiveCard item={hiveDetails} />
+        <ScreenHeading>Inspections</ScreenHeading>
+
       {/* Insert Inspection Card here */}
       <FlatList
         data={inspections}
