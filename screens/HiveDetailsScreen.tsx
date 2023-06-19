@@ -96,6 +96,15 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
     console.log(currentHiveID);
     navigation.navigate("New Inspection", currentHiveID);
   }
+
+
+  const ListHeader = () => (
+    <View>
+      <ScreenHeading>Summary</ScreenHeading>
+      <HiveCard item={hiveDetails} />
+      <ScreenHeading>Inspections</ScreenHeading>
+    </View>
+  );
   if (!hiveDetails) {
     return (
       <Container><StyledText>Loading...</StyledText></Container>
@@ -110,17 +119,12 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
     return <InspectionCard item={item} onPress={handleInspctCardPress} />
   }
   return (
-
     <Container>
-        <ScreenHeading>Summary</ScreenHeading>
-        <HiveCard item={hiveDetails} />
-        <ScreenHeading>Inspections</ScreenHeading>
-
-      {/* Insert Inspection Card here */}
       <FlatList
         data={inspections}
         renderItem={renderInspectionCard}
         keyExtractor={item => item.id}
+        ListHeaderComponent={ListHeader}
       />
       <ActionButton onPress={handleActionBttnPress} />
     </Container>
@@ -128,21 +132,3 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
 };
 
 export default HiveDetailsScreen;
-
-
-
-
-
-
-
-
-/* 
-<CardContainer>
-<CardTitle>{hiveDetails.name}</CardTitle>
-<CardText>Type: {hiveDetails.type}</CardText>
-<CardText>Strength: {hiveDetails.strength}</CardText>
-<CardText>Last Inspection: {hiveDetails.lastInspection.date}</CardText>
-<CardText>Inspection Notes: {hiveDetails.lastInspection.notes}</CardText>
-<CardText>Queen Status: {hiveDetails.queenStatus}</CardText>
-{/* Iterate over activities, harvests, treatments arrays to display each item 
-*/
