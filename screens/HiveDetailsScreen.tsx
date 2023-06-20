@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyledText, Container, ScreenHeading } from './styles/Screens.styles';
 import { API } from 'aws-amplify';
 import { GraphQLQuery } from '@aws-amplify/api';
-import { GetHiveQuery, InspectionsByHiveIDAndDateQuery, ListInspectionsQuery } from '../src/API';
-import { getHive, inspectionsByHiveIDAndDate, listInspections } from '../src/graphql/queries';
+import { GetHiveQuery, InspectionsByHiveIDAndDateQuery } from '../src/API';
+import { getHive, inspectionsByHiveIDAndDate } from '../src/graphql/queries';
 import HiveCard from '../components/HiveCard';
 import ActionButton from '../components/ActionButton';
 import InspectionCard from '../components/InspectionCard';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { FlatList } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
 import { View } from 'react-native';
@@ -119,7 +118,7 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
       //navigate to screen with more details for this inspection record
       console.log("Pressed inspection");
     }
-    return <InspectionCard item={item} onPress={handleInspctCardPress} />
+    return <InspectionCard item={item} onPress={handleInspctCardPress} refreshInspections={fetchInspections}/>
   }
   return (
     <Container>
