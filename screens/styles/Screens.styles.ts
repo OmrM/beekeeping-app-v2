@@ -20,19 +20,6 @@ export const StyledText = styled.Text`
     color: ${({ theme }) => theme.textColor};
 `;
 
-//TODO: remove these styles and use the ones in components folder
-export const CardContainer = styled.Pressable`
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: ${({ theme }) => theme.cardStyle.backgroundColor};
-    shadow-color: '#000';
-    shadow-offset: 0px 2px;
-    shadow-opacity: 0.1;
-    shadow-radius: 8px;
-    elevation: 3;
-`;
-
 export const ScreenHeading = styled.Text`
     padding-horizontal: 20px;
     padding-top: 10px;

@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import styled from 'styled-components/native';
 
 export const CardContainer = styled.View`
+    flex:1;
     margin: 10px 20px 10px 20px;
     padding: 15px;
     border-radius:8px;
@@ -20,6 +21,7 @@ export const CardContainer = styled.View`
     align-items: flex-start;
 `
 export const CardTextContainer = styled.View`
+    flex: 1;
     flex-direction: column;
     margin-left: 10px;
 `
@@ -48,5 +50,5 @@ export const CardIcon = styled(MaterialCommunityIcons)`
 
 export const DotsIcon = styled(MaterialCommunityIcons)`
     color: ${({ theme }) => theme.textColor};
-    font-size: 25px;
+    font-size: 24px;
 `
