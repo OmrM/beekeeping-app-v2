@@ -55,6 +55,7 @@ export const ScreenText = styled.Text`
     padding-horizontal: 20px;
     padding-top: 10px;
     font-size: ${({theme}) => theme.cardText.fontSize};
+    color: ${({ theme }) => theme.textColor};
 `;
 
 export const InputContainer = styled.View`
