@@ -6,7 +6,7 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styled from 'styled-components/native';
 
-export const CardContainer = styled.Pressable`
+export const CardContainer = styled.View`
     margin: 10px 20px 10px 20px;
     padding: 15px;
     border-radius:8px;
@@ -44,4 +44,9 @@ export const CardImage = styled.Image`
 export const CardIcon = styled(MaterialCommunityIcons)`
     color: ${ ({theme}) => theme.button.backgroundColor};
     padding-top: 3px;
+`
+
+export const DotsIcon = styled(MaterialCommunityIcons)`
+    color: ${({ theme }) => theme.textColor};
+    font-size: 25px;
 `
