@@ -96,6 +96,9 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
     console.log(currentHiveID);
     navigation.navigate("New Inspection", currentHiveID);
   }
+  const handleDotsPress = () => {
+    console.log("dots pressed")
+  };
 
 
   const ListHeader = () => (
