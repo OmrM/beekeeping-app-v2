@@ -3,9 +3,11 @@
 
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { CardContainer, CardIcon, CardText, CardTextContainer, CardTitle } from './styles/CardContainer.styles';
+import { CardContainer, CardIcon, CardText, CardTextContainer, CardTitle, MenuOptionIcon, MenuOptionText, MenuOptnContainer } from './styles/CardContainer.styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'react-native';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import DotsButtonIcon from './DotsIcon';
 
 export interface Hive {
     id: string;
@@ -42,6 +44,35 @@ const HiveCard = ({ item, onPress }: HiveCardProps) => {
                     <CardText>Notes: {item.notes}</CardText>
                     <CardText>Last Inspection: {formattedDate} </CardText>
                 </CardTextContainer>
+                <Menu>
+                <MenuTrigger>
+                    <DotsButtonIcon />
+                </MenuTrigger>
+                <MenuOptions
+                    customStyles={{
+                        optionsContainer: {
+                            borderRadius: 5,
+                            backgroundColor: 'transparent',
+                            borderColor: 'transparent', // or the color you want
+                            borderWidth: 0,
+
+                        },
+                    }}
+                >
+                    <MenuOption onSelect={undefined}>
+                        <MenuOptnContainer>
+                            <MenuOptionText>Edit</MenuOptionText>
+                            <MenuOptionIcon name="pencil-outline"/>
+                        </MenuOptnContainer>
+                    </MenuOption>
+                    <MenuOption onSelect={undefined}>
+                        <MenuOptnContainer>
+                            <MenuOptionText style={{ color: 'red' }}>Delete</MenuOptionText>
+                            <MenuOptionIcon name="trash-can-outline" style={{ color: 'red' }} />
+                        </MenuOptnContainer>
+                    </MenuOption>
+                </MenuOptions>
+            </Menu>
             </CardContainer>
         </TouchableOpacity>
     )
