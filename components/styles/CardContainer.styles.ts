@@ -7,7 +7,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import styled from 'styled-components/native';
 
 export const CardContainer = styled.View`
-    flex:1;
     margin: 10px 20px 10px 20px;
     padding: 15px;
     border-radius:8px;
