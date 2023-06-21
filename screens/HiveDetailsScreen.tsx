@@ -40,6 +40,7 @@ interface Hive {
 interface HiveDetailProps {
   route: {
     params: {
+      item: any;
       id: string;
     };
   };
@@ -60,8 +61,8 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
 
   const fetchHive = async () => {
     try {
-      console.log("FETCHING SINGLE HIVE")
-      let selectedHiveId = route.params.id;
+      console.log("FETCHING SINGLE HIVE", JSON.stringify(route.params.item.id))
+      let selectedHiveId = route.params.item.id;
       let hiveData = await API.graphql<GraphQLQuery<GetHiveQuery>>({
         query: getHive,
         variables: { id: selectedHiveId }
@@ -78,7 +79,7 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
   };
 
   const fetchInspections = async () => {
-    let selectedhive = route.params.id;
+    let selectedhive = route.params.item.id;
     //console.log("hive", selectedhive);
     let inspectionsData = await API.graphql<GraphQLQuery<InspectionsByHiveIDAndDateQuery>>({
       query: inspectionsByHiveIDAndDate,
@@ -87,13 +88,14 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
     });
     let inspectionsDataItems = inspectionsData.data?.inspectionsByHiveIDAndDate?.items ?? [];
     setInspections(inspectionsDataItems);
-    console.log("inspections for hive: ", JSON.stringify(inspectionsData));
+    //console.log("inspections for hive: ", JSON.stringify(inspectionsData));
   }
   const handleActionBttnPress = () => {
     //pass hiveID to new inspection screen. 
-    let currentHiveID = route.params.id;
-    console.log(currentHiveID);
-    navigation.navigate("New Inspection", currentHiveID);
+    /*     let currentHiveID = route.params.id;
+        console.log(currentHiveID); */
+    // pass hive object to new inspection screen
+    navigation.navigate("New Inspection", route.params.item);
   }
   const handleDotsPress = () => {
     console.log("dots pressed")
@@ -118,7 +120,8 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
       //navigate to screen with more details for this inspection record
       console.log("Pressed inspection");
     }
-    return <InspectionCard item={item} onPress={handleInspctCardPress} refreshInspections={fetchInspections}/>
+    return <InspectionCard item={item} onPress={handleInspctCardPress} refreshInspections={fetchInspections} inspections={inspections} setInspections={setInspections} />
+
   }
   return (
     <Container>
