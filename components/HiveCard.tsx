@@ -24,7 +24,7 @@ interface HiveCardProps {
     onPress: () => void;
 }
 const HiveCard = ({ item, onPress }: HiveCardProps) => {
-    const formattedDate = new Date(item.lastInspectionDate).toLocaleDateString();
+    const formattedDate = item.lastInspectionDate ? new Date(item.lastInspectionDate).toLocaleDateString() : null;
     return (
         <TouchableOpacity onPress={onPress}>
             <CardContainer>
@@ -32,47 +32,47 @@ const HiveCard = ({ item, onPress }: HiveCardProps) => {
                 {item.image !== null ? (
                     <Image
                         source={{ uri: item.image }}
-                        style={{ width: 30, height: 30, borderRadius: 25}}
+                        style={{ width: 30, height: 30, borderRadius: 25 }}
                     />
                 ) : (
-                    <CardIcon name="beehive-outline" size={25}/>
+                    <CardIcon name="beehive-outline" size={25} />
                 )}
                 <CardTextContainer>
                     <CardTitle>{item.name}</CardTitle>
                     <CardText>Bees: {item.bees}</CardText>
                     <CardText>Health: {item.health}</CardText>
                     <CardText>Notes: {item.notes}</CardText>
-                    <CardText>Last Inspection: {formattedDate} </CardText>
+                    <CardText>Last Inspection: {formattedDate ? formattedDate : "None"} </CardText>
                 </CardTextContainer>
                 <Menu>
-                <MenuTrigger>
-                    <DotsButtonIcon />
-                </MenuTrigger>
-                <MenuOptions
-                    customStyles={{
-                        optionsContainer: {
-                            borderRadius: 5,
-                            backgroundColor: 'transparent',
-                            borderColor: 'transparent', // or the color you want
-                            borderWidth: 0,
+                    <MenuTrigger>
+                        <DotsButtonIcon />
+                    </MenuTrigger>
+                    <MenuOptions
+                        customStyles={{
+                            optionsContainer: {
+                                borderRadius: 5,
+                                backgroundColor: 'transparent',
+                                borderColor: 'transparent', // or the color you want
+                                borderWidth: 0,
 
-                        },
-                    }}
-                >
-                    <MenuOption onSelect={undefined}>
-                        <MenuOptnContainer>
-                            <MenuOptionText>Edit</MenuOptionText>
-                            <MenuOptionIcon name="pencil-outline"/>
-                        </MenuOptnContainer>
-                    </MenuOption>
-                    <MenuOption onSelect={undefined}>
-                        <MenuOptnContainer>
-                            <MenuOptionText style={{ color: 'red' }}>Delete</MenuOptionText>
-                            <MenuOptionIcon name="trash-can-outline" style={{ color: 'red' }} />
-                        </MenuOptnContainer>
-                    </MenuOption>
-                </MenuOptions>
-            </Menu>
+                            },
+                        }}
+                    >
+                        <MenuOption onSelect={undefined}>
+                            <MenuOptnContainer>
+                                <MenuOptionText>Edit</MenuOptionText>
+                                <MenuOptionIcon name="pencil-outline" />
+                            </MenuOptnContainer>
+                        </MenuOption>
+                        <MenuOption onSelect={undefined}>
+                            <MenuOptnContainer>
+                                <MenuOptionText style={{ color: 'red' }}>Delete</MenuOptionText>
+                                <MenuOptionIcon name="trash-can-outline" style={{ color: 'red' }} />
+                            </MenuOptnContainer>
+                        </MenuOption>
+                    </MenuOptions>
+                </Menu>
             </CardContainer>
         </TouchableOpacity>
     )
