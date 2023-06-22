@@ -102,11 +102,7 @@ const NewInspectionScreen = ({ navigation, route }) => {
             image: imageState.imageURI,
             hiveID: currentHiveID,
         }
-        //adding imageURI to formstate if it exists. idk why i'm not just updating it 
-        //when i add an image. will figure out later
-        if (formState.image) {
-            inspectionDetails = { ...inspectionDetails, image: formState.image }
-        }
+
         //make sure to get the current date into the inspection details to be submitted: 
         inspectionDetails.date = date.toISOString();
 
@@ -138,10 +134,11 @@ const NewInspectionScreen = ({ navigation, route }) => {
             .filter(inspection => !isEdit || inspection.id !== formState.id)
             .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        // get the date of the latest inspection
-        const latestInspectionDate = sortedInspections.length > 0
-            ? new Date(sortedInspections[0].date)
-            : null;
+        // get the date of the latest inspection. 
+        let latestInspectionDate = null;
+        if (sortedInspections.length > 0) {
+            latestInspectionDate = new Date(sortedInspections[0].date);
+        }
 
         // check if the new or updated inspection date is the latest
         if (!latestInspectionDate || newInspectionDate > latestInspectionDate) {
