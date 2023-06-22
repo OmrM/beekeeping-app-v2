@@ -91,16 +91,9 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
     //console.log("inspections for hive: ", JSON.stringify(inspectionsData));
   }
   const handleActionBttnPress = () => {
-    //pass hiveID to new inspection screen. 
-    /*     let currentHiveID = route.params.id;
-        console.log(currentHiveID); */
     // pass hive object to new inspection screen
     navigation.navigate("New Inspection", route.params.item);
   }
-  const handleDotsPress = () => {
-    console.log("dots pressed")
-  };
-
 
   const ListHeader = () => (
     <View>
@@ -120,7 +113,14 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
       //navigate to screen with more details for this inspection record
       console.log("Pressed inspection");
     }
-    return <InspectionCard item={item} onPress={handleInspctCardPress} refreshInspections={fetchInspections} inspections={inspections} setInspections={setInspections} />
+    return <InspectionCard item={item} onPress={handleInspctCardPress} 
+    refreshInspections={fetchInspections} 
+    inspections={inspections} 
+    setInspections={setInspections} 
+    currHiveID={route.params.item.id}
+    currHiveState = {hiveDetails}
+    setCurrHiveState = {setHiveDetails}
+    />
 
   }
   return (
