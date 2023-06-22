@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  } from 'react';
 import { CardContainer, CardText, CardTextContainer, CardTitle, MenuOptionIcon, MenuOptionText, MenuOptnContainer, } from './styles/CardContainer.styles'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DotsButtonIcon from './DotsIcon';
@@ -8,11 +8,11 @@ import {
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
-import { DeleteInspectionInput, DeleteInspectionMutation, InspectionsByHiveIDAndDateQuery, UpdateHiveMutation} from '../src/API';
+import { DeleteInspectionInput, DeleteInspectionMutation, UpdateHiveMutation} from '../src/API';
 import { deleteInspection, updateHive } from '../src/graphql/mutations';
 import { API, GraphQLQuery } from '@aws-amplify/api';
 import { useNavigation } from '@react-navigation/native';
-import { inspectionsByHiveIDAndDate } from '../src/graphql/queries';
+
 interface InspectionCardProps {
     item: object;
     onPress: () => void;
@@ -23,20 +23,12 @@ interface InspectionCardProps {
     currHiveID: any;
 }
 
-const InspectionCard = ({ item, onPress, refreshInspections, inspections, setInspections, currHiveID, currHiveState, setCurrHiveState }: InspectionCardProps) => {
+const InspectionCard = ({ item, onPress, inspections, setInspections, currHiveID, currHiveState, setCurrHiveState }: InspectionCardProps) => {
     const navigation = useNavigation();
     const formattedDate = new Date(item.date).toLocaleDateString();
 
-    //TODO: Delete record using the item.id
-    // TODO: navigate to a page to EDIT, might be able to reuse NewInspectionScreen
-
-    useEffect(() => {
-        //console.log("hive id, passed into inspection card: ", JSON.stringify(currHiveID), currHiveID);
-        //console.log("current hive data: ", currHiveState)
-        //console.log("current inspections: ", inspections)
-    })
+    //DELETE record using the item.id
     const handleDelete = async () => {
-
         await deleteFunction();
         // filter out the deleted item from inspections array
         const updatedInspections = inspections.filter(inspection => inspection.id !== item.id);
@@ -129,18 +121,3 @@ const InspectionCard = ({ item, onPress, refreshInspections, inspections, setIns
 };
 
 export default InspectionCard;
-
-
-
-/* const fetchInspections = async () => {
-    let selectedhive = currHiveID
-    //console.log("hive", selectedhive);
-    let inspectionsData = await API.graphql<GraphQLQuery<InspectionsByHiveIDAndDateQuery>>({
-      query: inspectionsByHiveIDAndDate,
-      variables: { hiveID: selectedhive, sortDirection: "DESC" }
-
-    });
-    let inspectionsDataItems = inspectionsData.data?.inspectionsByHiveIDAndDate?.items ?? [];
-    
-    //console.log("inspections for hive: ", JSON.stringify(inspectionsData));
-  } */

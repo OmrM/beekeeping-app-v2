@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Container, InputContainer, ScreenText, StyledScrollView, StyledText } from './styles/Screens.styles';
+import { InputContainer, ScreenText, StyledScrollView } from './styles/Screens.styles';
 import StyledButton from '../components/StyledButton';
 import * as ImagePicker from 'expo-image-picker';
-import { Apiary, CreateApiaryInput, CreateApiaryMutation, CreateHiveInput, CreateHiveMutation, CreateInspectionInput, CreateInspectionMutation, ListApiariesQuery, UpdateHiveMutation, UpdateInspectionInput, UpdateInspectionMutation } from '../src/API';
-import { createHive, createInspection, updateHive, updateInspection } from '../src/graphql/mutations';
+import { CreateInspectionInput, CreateInspectionMutation, UpdateHiveMutation, UpdateInspectionMutation } from '../src/API';
+import { createInspection, updateHive, updateInspection } from '../src/graphql/mutations';
 import { API, GraphQLQuery } from '@aws-amplify/api';
 import { Storage } from '@aws-amplify/storage';
 import 'react-native-get-random-values';
@@ -11,7 +11,6 @@ import { v4 as uuidv4 } from 'uuid';
 import FormImage from '../components/FormImage';
 import StyledInput from '../components/StyledInput';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { ScreenHeading } from './styles/Screens.styles';
 import { View } from 'react-native';
 
 const NewInspectionScreen = ({ navigation, route }) => {
@@ -26,7 +25,7 @@ const NewInspectionScreen = ({ navigation, route }) => {
         const currentDate = selectedDate;
         setDate(currentDate);
         updateFormState('date', currentDate);
-        console.log("date: ", currentDate);
+        console.log("selected date: ", currentDate);
     };
     const [formState, setFormState] = useState(initialFormState);
     const [imageState, setImageState] = useState(initialImageState);
@@ -96,7 +95,6 @@ const NewInspectionScreen = ({ navigation, route }) => {
             }
         }
         //organizing data to send, getting hiveID from previous screen
-        let resultId: string | undefined;
         let inspectionDetails: CreateInspectionInput = {
             id: formState.id,
             date: formState.date,
@@ -111,25 +109,13 @@ const NewInspectionScreen = ({ navigation, route }) => {
         }
         //make sure to get the current date into the inspection details to be submitted: 
         inspectionDetails.date = date.toISOString();
-        // Define a helper function to update the hive's lastInspectionDate
-        /*         const updateHiveLastInspectionDate = async () => {
-                    await API.graphql<GraphQLQuery<UpdateHiveMutation>>({
-                        query: updateHive,
-                        variables: { input: { id: currentHiveID, lastInspectionDate: inspectionDetails.date } },
-                    });
-                };
-                 */
-        //UPDATE op: Submit Data: 
+
+        //UPDATE existing INSPECTION op: Submit Data: 
         if (isEdit) {
             const editedInpection = await API.graphql<GraphQLQuery<UpdateInspectionMutation>>({
                 query: updateInspection,
                 variables: { input: inspectionDetails }
             });
-            if (new Date(inspectionDetails.date) > new Date(route.params.lastInspectionDate)) {
-                //update the last inspection date on hive
-                //console.log("updating to newer lastinspectiondate")
-                //await updateHiveLastInspectionDate();
-            }
         } else {
             //NEW INSPECTION op: Submit Data: 
             try {
@@ -143,34 +129,20 @@ const NewInspectionScreen = ({ navigation, route }) => {
             }
         }
         // UPDATE HIVE'S lastInspection field with the new inspection
-        /*  console.log("updating HIVE's last inspection with", inspectionDetails.date)
-         console.log("current hive's inspection date", ) */
         console.log("current hive's latest inspection date", currentHiveState.lastInspectionDate)
-        /*         if (new Date(inspectionDetails.date) > new Date(currentHiveState.lastInspectionDate)) {
-                    console.log("updating HIVE's last inspection with", inspectionDetails.date)
-                    try {
-                      await API.graphql<GraphQLQuery<UpdateHiveMutation>>({
-                        query: updateHive,
-                        variables: { input: { id: currentHiveID, lastInspectionDate: inspectionDetails.date } },
-                      });
-                    } catch(error){
-                      console.log(error);
-                    }
-                  } */
 
- 
         const newInspectionDate = new Date(date);
 
         // create a sorted list of all inspections' dates (excluding the current inspection if editing)
         const sortedInspections = inspections
             .filter(inspection => !isEdit || inspection.id !== formState.id)
             .sort((a, b) => new Date(b.date) - new Date(a.date));
-    
+
         // get the date of the latest inspection
         const latestInspectionDate = sortedInspections.length > 0
             ? new Date(sortedInspections[0].date)
             : null;
-    
+
         // check if the new or updated inspection date is the latest
         if (!latestInspectionDate || newInspectionDate > latestInspectionDate) {
             console.log("updating HIVE's last inspection with", formState.date);
