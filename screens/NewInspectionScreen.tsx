@@ -13,6 +13,17 @@ import StyledInput from '../components/StyledInput';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { View } from 'react-native';
 
+type InspectionStateType = {
+    date: string;
+    hiveID: string;
+    notes: string;
+    image: string;
+  }
+  
+  type ImageStateType = {
+    imageURI: string;
+  }
+  
 const NewInspectionScreen = ({ navigation, route }) => {
     const [currentHiveID, setCurrentHiveID] = useState("");
     const [currentHiveState, setCurrentHiveState] = useState({});
@@ -27,8 +38,8 @@ const NewInspectionScreen = ({ navigation, route }) => {
         updateFormState('date', currentDate);
         console.log("selected date: ", currentDate);
     };
-    const [formState, setFormState] = useState(initialFormState);
-    const [imageState, setImageState] = useState(initialImageState);
+    const [formState, setFormState] = useState(initialFormState as InspectionStateType);
+    const [imageState, setImageState] = useState(initialImageState as ImageStateType);
     function updateFormState(key: any, value: any) {
         setFormState({ ...formState, [key]: value });
     }
