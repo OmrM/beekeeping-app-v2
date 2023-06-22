@@ -32,6 +32,8 @@ const InspectionCard = ({ item, onPress, refreshInspections, inspections, setIns
 
     useEffect(() => {
         //console.log("hive id, passed into inspection card: ", JSON.stringify(currHiveID), currHiveID);
+        //console.log("current hive data: ", currHiveState)
+        //console.log("current inspections: ", inspections)
     })
     const handleDelete = async () => {
 
@@ -106,7 +108,7 @@ const InspectionCard = ({ item, onPress, refreshInspections, inspections, setIns
                         },
                     }}
                 >
-                    <MenuOption onSelect={() => navigation.navigate('New Inspection', { inspection: item })}>
+                    <MenuOption onSelect={() => navigation.navigate('New Inspection', { inspection: item,  currHiveData: currHiveState, inspections:inspections})}>
                         <MenuOptnContainer>
                             <MenuOptionText>Edit</MenuOptionText>
                             <MenuOptionIcon name="pencil-outline" />

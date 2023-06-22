@@ -61,7 +61,7 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
 
   const fetchHive = async () => {
     try {
-      console.log("FETCHING SINGLE HIVE", JSON.stringify(route.params.item.id))
+      //console.log("FETCHING SINGLE HIVE", JSON.stringify(route.params.item.id))
       let selectedHiveId = route.params.item.id;
       let hiveData = await API.graphql<GraphQLQuery<GetHiveQuery>>({
         query: getHive,
@@ -92,7 +92,7 @@ const HiveDetailsScreen = ({ navigation, route }: HiveDetailProps) => {
   }
   const handleActionBttnPress = () => {
     // pass hive object to new inspection screen
-    navigation.navigate("New Inspection", route.params.item);
+    navigation.navigate("New Inspection", {inspection: null, currHiveData: route.params.item, inspections: inspections });
   }
 
   const ListHeader = () => (

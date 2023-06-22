@@ -16,6 +16,9 @@ import { View } from 'react-native';
 
 const NewInspectionScreen = ({ navigation, route }) => {
     const [currentHiveID, setCurrentHiveID] = useState("");
+    const [currentHiveState, setCurrentHiveState] = useState({});
+    const [inspections, setInspections] = useState([]);
+
     const initialFormState = { date: '', hiveID: '', notes: '', image: '', }
     const initialImageState = { imageURI: '' };
     const [date, setDate] = useState(new Date());
@@ -37,6 +40,11 @@ const NewInspectionScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         //check if an inspection object was passed (meaning we're editing, not creating new)
+        let currHiveData = route.params.currHiveData;
+        setCurrentHiveState(currHiveData);
+        let inspections = route.params.inspections;
+        console.log("current inspections: ", inspections);
+        setInspections(inspections);
         if (route.params?.inspection) {
             navigation.setOptions({ title: 'Edit Inspection' });
             let inspection = route.params.inspection;
@@ -49,8 +57,8 @@ const NewInspectionScreen = ({ navigation, route }) => {
         } else {
             // Creating new: will use the default states and the header defined in the stack
             setIsEdit(false);
-            setCurrentHiveID(route.params.id)
-            console.log("Hive id when creating new", JSON.stringify(route.params.id))
+            setCurrentHiveID(currHiveData.id)
+            console.log("Hive id when creating new", JSON.stringify(currHiveData.id))
         }
     }, [route.params]);
 
@@ -104,13 +112,13 @@ const NewInspectionScreen = ({ navigation, route }) => {
         //make sure to get the current date into the inspection details to be submitted: 
         inspectionDetails.date = date.toISOString();
         // Define a helper function to update the hive's lastInspectionDate
-/*         const updateHiveLastInspectionDate = async () => {
-            await API.graphql<GraphQLQuery<UpdateHiveMutation>>({
-                query: updateHive,
-                variables: { input: { id: currentHiveID, lastInspectionDate: inspectionDetails.date } },
-            });
-        };
-         */
+        /*         const updateHiveLastInspectionDate = async () => {
+                    await API.graphql<GraphQLQuery<UpdateHiveMutation>>({
+                        query: updateHive,
+                        variables: { input: { id: currentHiveID, lastInspectionDate: inspectionDetails.date } },
+                    });
+                };
+                 */
         //UPDATE op: Submit Data: 
         if (isEdit) {
             const editedInpection = await API.graphql<GraphQLQuery<UpdateInspectionMutation>>({
@@ -123,27 +131,57 @@ const NewInspectionScreen = ({ navigation, route }) => {
                 //await updateHiveLastInspectionDate();
             }
         } else {
-        //NEW INSPECTION op: Submit Data: 
+            //NEW INSPECTION op: Submit Data: 
             try {
                 const newInspection = await API.graphql<GraphQLQuery<CreateInspectionMutation>>({
                     query: createInspection,
                     variables: { input: inspectionDetails }
                 });
-                console.log("inspection id to save in hive: ", JSON.stringify(resultId));
+                console.log("inspection id to save in hive: ", JSON.stringify(newInspection.data?.createInspection?.id));
             } catch (error) {
                 console.log(error);
             }
         }
         // UPDATE HIVE'S lastInspection field with the new inspection
-        console.log("updating HIVE's last inspection with", inspectionDetails.date)
-        console.log("current hive's inspection date", )
-        try {
-            await API.graphql<GraphQLQuery<UpdateHiveMutation>>({
-                query: updateHive,
-                variables: { input: { id: currentHiveID, lastInspectionDate: inspectionDetails.date } },
-            });
-        } catch(error){
-            console.log(error);
+        /*  console.log("updating HIVE's last inspection with", inspectionDetails.date)
+         console.log("current hive's inspection date", ) */
+        console.log("current hive's latest inspection date", currentHiveState.lastInspectionDate)
+        /*         if (new Date(inspectionDetails.date) > new Date(currentHiveState.lastInspectionDate)) {
+                    console.log("updating HIVE's last inspection with", inspectionDetails.date)
+                    try {
+                      await API.graphql<GraphQLQuery<UpdateHiveMutation>>({
+                        query: updateHive,
+                        variables: { input: { id: currentHiveID, lastInspectionDate: inspectionDetails.date } },
+                      });
+                    } catch(error){
+                      console.log(error);
+                    }
+                  } */
+
+ 
+        const newInspectionDate = new Date(date);
+
+        // create a sorted list of all inspections' dates (excluding the current inspection if editing)
+        const sortedInspections = inspections
+            .filter(inspection => !isEdit || inspection.id !== formState.id)
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+        // get the date of the latest inspection
+        const latestInspectionDate = sortedInspections.length > 0
+            ? new Date(sortedInspections[0].date)
+            : null;
+    
+        // check if the new or updated inspection date is the latest
+        if (!latestInspectionDate || newInspectionDate > latestInspectionDate) {
+            console.log("updating HIVE's last inspection with", formState.date);
+            try {
+                await API.graphql<GraphQLQuery<UpdateHiveMutation>>({
+                    query: updateHive,
+                    variables: { input: { id: currentHiveID, lastInspectionDate: date.toISOString() } },
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
         navigation.goBack();
     };
