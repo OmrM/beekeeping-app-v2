@@ -25,9 +25,10 @@ The Beekeeping App is a mobile application designed to help beekeepers manage an
 - Filtering/Search: Users will be able to search for inspections and filter by date.
 
 ## Getting Started
-To run this project locally, you will need to install [React Native](https://reactnative.dev/docs/environment-setup) and [AWS Amplify CLI](https://docs.amplify.aws/cli/start/install/).
+To run this project locally, you will need to install [React Native](https://reactnative.dev/docs/environment-setup), [AWS Amplify CLI](https://docs.amplify.aws/cli/start/install/), and [Expo](https://docs.expo.dev/get-started/installation/).
 
-1. Clone the repo:
+1. Clone the repo
+2. change into directory:
    cd beekeeping-app
 3. Install dependencies:
    yarn install
