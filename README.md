@@ -13,7 +13,7 @@ The Beekeeping App is a mobile application designed to help beekeepers manage an
 
 ## Technology Stack
 
-- **Front-end**: React Native, Styled Components, Context API for theme switching, Expo Managed
+- **Front-end**: React Native, Styled Components, Context API for theme switching
 - **Back-end**: GraphQL API created with AWS Amplify Console.
 - **Database**: AWS DynamoDB.
 
