@@ -6,8 +6,9 @@ import { CardContainer, CardTitle, CardText, CardTextContainer } from './styles/
 
 // Apiary Interface: also used in the ApiariesScreen.tsx
 export interface Apiary {
+    id: string;
     name: string;
-    hives: number;
+    hiveCount: number;
     location: string;
     notes: string;
 }
@@ -23,7 +24,7 @@ const ApiaryCard = ({ item, onPress }: ApiaryCardProps) => {
             <CardContainer>
                 <CardTextContainer>
                     <CardTitle>{item.name}</CardTitle>
-                    <CardText>Hives: {item.hives}</CardText>
+                    <CardText>Hives: {item.hiveCount}</CardText>
                     <CardText>Location: {item.location}</CardText>
                     <CardText>Notes: {item.notes}</CardText>
                 </CardTextContainer>

@@ -7,26 +7,25 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    flex: 1;
-    padding-top: 20px;
-    padding-horizontal: 20px;
+    flex-grow: 1;
     background-color: ${({ theme }) => theme.background};
 `;
+
+export const StyledScrollView = styled.ScrollView`
+    flex-grow:1;
+    background-color: ${({ theme }) => theme.background};
+`
 
 export const StyledText = styled.Text`
     color: ${({ theme }) => theme.textColor};
 `;
 
-export const CardContainer = styled.Pressable`
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: ${({ theme }) => theme.cardStyle.backgroundColor};
-    shadow-color: '#000';
-    shadow-offset: 0px 2px;
-    shadow-opacity: 0.1;
-    shadow-radius: 8px;
-    elevation: 3;
+export const ScreenHeading = styled.Text`
+    padding-horizontal: 20px;
+    padding-top: 10px;
+    font-size: ${({ theme }) => theme.cardTitle.fontSize};
+    font-weight:  ${({ theme }) => theme.cardTitle.fontWeight};
+    color:  ${({ theme }) => theme.textColor}
 `;
 
 export const CardTitle = styled.Text`
@@ -37,11 +36,19 @@ export const CardTitle = styled.Text`
 export const CardText = styled.Text`
     font-size: ${({ theme }) => theme.cardText.fontSize};
     font-weight:  ${({ theme }) => theme.cardText.fontWeight};
-    color: ${ ({theme}) => theme.textColor}
+    color: ${({ theme }) => theme.textColor};
+`;
+export const ScreenText = styled.Text`
+    padding-horizontal: 20px;
+    padding-top: 10px;
+    font-size: ${({theme}) => theme.cardText.fontSize};
+    color: ${({ theme }) => theme.textColor};
 `;
 
-
-//if I wanted to use the theming inline in a component: 
+export const InputContainer = styled.View`
+    margin: 20px 20px 0px 20px;
+`;
+//if I wanted to use the theming inline in a component:
 /* const SettingsScreen = ({toggleTheme}) => {
 
     return (

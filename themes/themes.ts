@@ -73,7 +73,7 @@ export const darkTheme: DefaultTheme = {
     fontWeight: 'normal',
   },
   button:{
-    backgroundColor: '#ffd247 ',
+    backgroundColor: '#ffd247',
     textColor: '#0D1117'
   },
 }

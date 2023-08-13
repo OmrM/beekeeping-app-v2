@@ -2,9 +2,22 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { useState } from 'react';
 import { StatusBar } from 'react-native';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { Amplify } from 'aws-amplify';
+import awsconfig from './src/aws-exports';
+import { LogBox } from 'react-native';
+import { MenuProvider } from 'react-native-popup-menu';
 
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']); // Ignore log notification by message
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+Amplify.configure({
+  ...awsconfig,
+  Storage: {
+    AWSS3: {
+      region: 'us-west-2', // Replace with your AWS region
+    },
+  },
+});
 
 
 //theming dependencies:
@@ -15,7 +28,7 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 
 
 const App = () => {
-  
+
   const [theme, setTheme] = useState('light');
 
   const toggleTheme = () => {
@@ -31,12 +44,14 @@ const App = () => {
   return (
     // Wrap the entire app with the ThemeProvider component and pass the selected theme as a prop
     <ThemeProvider theme={selectedTheme} >
-     {/*  <StatusBar style='auto'/> */}
-     <StatusBar barStyle={theme === 'light' ? 'dark-content' : 'light-content'} />
-      <NavigationContainer>
-        {/* import top level navigator here */}
-        <BottomTabNavigator toggleTheme={toggleTheme} />
-      </NavigationContainer>
+      <MenuProvider>
+        {/*  <StatusBar style='auto'/> */}
+        <StatusBar barStyle={theme === 'light' ? 'dark-content' : 'light-content'} />
+        <NavigationContainer>
+          {/* import top level navigator here */}
+          <BottomTabNavigator toggleTheme={toggleTheme} />
+        </NavigationContainer>
+      </MenuProvider>
     </ThemeProvider>
   );
 }
