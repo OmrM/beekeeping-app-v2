@@ -6,7 +6,7 @@ The Beekeeping App is a mobile application designed to help beekeepers manage an
 ## Key Features
 
 - **Apiary and Hive Management**: Users can add, edit, and delete hives. Hives can be assigned to an Apiary group for better organization.
-- <img src="https://github.com/OmrM/beekeeping-app-v2/raw/master/images/hive_details_screen.png" alt="Hive Details Screen" width="400">
+- <img src="https://github.com/OmrM/beekeeping-app-v2/raw/master/images/hive_details_screen.png" alt="Hive Details Screen" width="200">
 
 - **Inspection Tracking**: Users can record and update inspection data, which includes date, detailed notes, and the option to add an image.
 
